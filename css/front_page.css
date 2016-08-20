@@ -1,0 +1,367 @@
+/************************************/
+/*********** Start of File **********/
+/************************************/
+/* ----------------------------------------------------------- */
+/* CSS Page */
+/* Designed For: Internet Explorer, FireFox, Netscape, Chrome */
+/* Produced By: DataReel Software Development */
+/* File Creation Date: 05/25/2001 */
+/* Date Last Modified: 10/02/2008
+/* --- */
+/* Package version: 1.04 */
+/* --- */
+/* Copyright (c) 2001-2008 DataReel Software Development */
+/* ----------------------------------------------------------- */
+/* ------------- CSS Page Description and Details ------------ */
+/* ----------------------------------------------------------- */
+/* --- */
+/* START OF LICENSING AND DISCLAIMER AGREEMENT */
+/* --- */
+/* This CSS page and its derivatives are copyright (c) 2001-2008, by */
+/* DataReel Software Development. This CSS page and any derivative Web */
+/* objects are published on the Internet for public viewing only. */
+/* Reproduction of any CSS page and/or Web objects published on */
+/* this Website is prohibited unless authorized in writing by */
+/* DataReel Software Development or authorized reseller. Reproduction of any */
+/* third party code used to produce pages on this Website is subject to */
+/* the third party licensing and distribution agreement. */
+/* --- */
+/* THIS SOFTWARE IS PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND. THE */
+/* ENTIRE RISK OF THE QUALITY AND PERFORMANCE OF THIS SOFTWARE IS WITH */
+/* YOU. SHOULD ANY ELEMENT OF THIS SOFTWARE PROVE DEFECTIVE, YOU WILL */
+/* ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR, OR CORRECTION. */
+/* --- */
+/* *********************************************************** */
+/* *************** THIRD PARTY ACKNOWLEDGMENT **************** */
+/* *********************************************************** */
+/* --- */
+/* NONE */
+/* --- */
+/* END OF LICENSING AND DISCLAIMER AGREEMENT */
+/* --- */
+/* CSS include file */
+/* ----------------------------------------------------------- */
+/* CSS CONTENT STARTS BELOW */
+
+body, html {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    padding: 0px;
+    background-image: url(images/frontpage_background.gif);
+}
+
+#topmenu {
+    float: top;
+    height: 100%;
+    width: 761px; 
+}
+
+#topmenu li {
+    display: inline;
+    background-color: #0000FF;
+    height: 15px;
+    width: 100px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 21px;
+    font-weight: bold;
+    color: #FFFFFF;
+    margin: 0em;
+    padding: .9px 10px .9px 10px;
+}
+
+#topmenu li a {
+    text-decoration: none;
+    font-size: 21px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    color: #FFFFFF;
+}
+#topmenu li a:link {
+    text-decoration: none;
+}
+
+#topmenu li a:visited {
+    text-decoration: none;
+}
+#topmenu li a:hover {
+  background-color: #A0CCFF;
+  text-decoration: underline;
+}
+
+#topmenu li.sep {
+    /* Table separator style */ 
+    display: inline;
+    background-color: #A9A989;
+    height: 15;
+    width: 2px;
+    margin: 0em;
+    padding: .9px 0px .9px 0px;
+}
+
+#leftmenu {
+    float: left;
+    height: 100%;
+    width: 150px; 
+    background-color: #000000;
+}
+
+#leftmenu ul {
+    margin: 5px;
+    padding: 0em 0em .2em .2em;
+    list-style-type: none;
+}
+
+#leftmenu li {
+    background-color: #0000FF;
+    height: 15;
+    width: 115px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 21px;
+    font-weight: bold;
+    color: #FFFFFF;
+    margin: 0em;
+    padding: .9px 10px .9px 10px;
+}
+
+#leftmenu li a {
+    text-decoration: none;
+    font-size: 21px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    color: #FFFFFF;
+}
+
+#leftmenu li a:link {
+    text-decoration: none;
+}
+
+#leftmenu li a:visited {
+    text-decoration: none;
+}
+
+#leftmenu li a:hover {
+  background-color: #A0CCFF;
+  text-decoration: underline;
+}
+
+#leftmenu li.sep {
+    /* Table separator style */ 
+    background-color: #000000;
+    height: 10px;
+    width: 100%;
+    margin: 0em;
+    padding: .9px 0px .9px 0px;
+}
+
+#leftmenu li.webmaster {
+    background-color: #000000;
+    height: 15px;
+    width: 100%;
+    margin: 0em;
+    padding: 0px 0px 0px 0px;
+}
+#leftmenu li.webmaster a {
+    text-decoration: none;
+    font-size: 10px;
+    font-family: Arial;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+#maintable {
+    background-color: #000000;
+    float: top;
+    height: 100%;
+    width: 761px;
+}
+
+#bodytable {
+    background-color: #A0CCFF;
+    float: left;
+    text-align: left;
+    height: 100%;
+    width: 580px; 
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-left-color: #000;
+}
+
+#bodytable ul {
+    margin: 0em;
+    padding: 0em 0em .2em .2em;
+    list-style-type: none;
+}
+
+#bodytable li {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0em;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: .9px 0px .9px 0px;
+}
+
+#bodytable li.sep {
+    background-color: #A0CCFF;
+    height: 10px;
+    width: 560px;
+    margin: 0em;
+    padding: .9px 0px .9px 0px;
+}
+
+#bodytable2 {
+    background-color: #A0CCFF;
+    float: center;
+    text-align: left;
+    height: 100%;
+    width: 711px; 
+}
+
+#bodytable2 ul {
+    margin: 0em;
+    padding: 0em 0em .2em .2em;
+    list-style-type: none;
+}
+
+#bodytable2 li {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0em;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: .9px 0px .9px 0px;
+}
+
+#bodytable2 li.sep {
+    background-color: #A0CCFF;
+    height: 10px;
+    width: 700px;
+    margin: 0em;
+    padding: .9px 0px .9px 0px;
+}
+
+#footertable {
+    float: bottom;
+    white-space: nowrap;
+    padding: 0px;
+    font-weight:bold; 
+    font-size:12pt; 
+    color:#FFFFFF; 
+    font-family:Arial;
+    background-image: url(images/frontpage_background.gif);
+    /* background-color: #A0CCFF; */
+    clear: left;
+    width: 761px;
+    height: 15px;
+    text-align: left;
+}
+
+#logotable1 {
+    font-family: Arial;
+}
+
+#searchsitetable1 {
+    font-family: Arial;
+}
+
+#webmasterinfotable1 {
+    font-family: Arial;
+}
+
+.captiontable {
+  background-color: #C4ECF9;
+  padding: 0.75em 1.5em;
+  font-size: 12px;
+  border: 1px solid #ddd;
+  width: 525px;
+}
+
+.captionsubtable {
+  background-color: #C4ECF9;
+  padding: 0em 0em;
+  border: 5px solid #ddd;
+  width: 525px;
+}
+
+/* Page fonts */
+/* Arial, Helvetica, sans-serif, Times, Lucida Sans */
+.titlefont1 {
+    font-weight:bold; 
+    font-size:12pt; 
+    color:#0000FF; 
+    font-family:Arial;
+}
+
+.titlefont2 {
+    font-weight:bold; 
+    font-size:10pt; 
+    color:#000000; 
+    font-family:Arial;
+}
+
+.titlefont3 {
+    font-weight:bold; 
+    font-size:10pt; 
+    color:#000000; 
+    font-family:Arial, Lucida Sans, Helvetica;
+}
+
+.captiontext1 {
+    font-weight:normal; 
+    font-size:10pt; 
+    color:#000000; 
+    font-family:"Times New Roman", Times;
+}
+
+.webmasterfont1 {
+    font-weight:normal; 
+    font-size:10pt; 
+    color:#000000; 
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Format this page for printing */
+@media print {
+    body, html {
+  	background-image: none;
+    }
+    #topmenu {
+	display: none;
+    }	
+    #leftmenu {
+	display: none;
+    }	
+    #footertable {
+	float: left;
+	background-image: none;
+	text-align: left;
+    }
+    #bodytable {
+	background-color: #FFFFFF;
+	float: left;
+	text-align: left;
+	height: 100%;
+	width: 580px; 
+	border-left-width: 0px;
+    }
+
+    #bodytable2 {
+	background-color: #FFFFFF;
+	float: center;
+	text-align: left;
+	height: 100%;
+	width: 711px; 
+    }
+    #searchsitetable1 {
+	display: none;
+    }
+    #webmasterinfotable1 {
+	display: none;
+    }
+    #logotable1 {
+	display: none;
+    }
+}
+/* CSS CONTENT ENDS ABOVE */
+/* ----------------------------------------------------------- */
+/************************************/
+/************ End of File ***********/
+/************************************/
