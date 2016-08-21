@@ -90,21 +90,26 @@
 The DataReel cluster manager (DRCM) software is used to build high
 availability Linux server clusters. High availability clusters manage
 system resources with automatic fail over in event of one or more
-server failures. The DRCM project was designed to support multiple
+server failures. 
+<br /><br />
+The DRCM project was designed to support multiple
 cluster nodes in a non-hierarchical arrangement. Cluster resources are
 distributed between the nodes with backup rolls assigned. The DRCM
 project requirements were based on the need to replace existing
 cluster software with multiple dependency issues and cluster software
-that did not scale well more than 2 cluster nodes. A  Linux server
-cluster is typically 2 servers with equal capacity, where one server
-provides primary services and the other server provides backup
-services. In the event of a primary server failure the secondary
-server automatically assumes all cluster resources. In data centers
-utilizing virtualization technology, services are distributed between
-many virtual machines (VMs). In a VM environment clustering multiple
-VM nodes running on multiple bare metal servers is a very effective
-way to manage services in the event of a bare metal server
-failure. The DRCM multiple node concept can scale between nodes in one
+that did not scale well more than 2 cluster nodes. 
+<br /><br />
+A  Linux server cluster is typically 2 servers with equal capacity,
+where one server provides primary services and the other server
+provides backup services. In the event of a primary server failure the
+secondary server automatically assumes all cluster resources. In data
+centers utilizing virtualization technology, services are distributed
+between many virtual machines (VMs). In a VM environment clustering
+multiple VM nodes running on multiple bare metal servers is a very
+effective way to manage services in the event of a bare metal server
+failure.
+<br /><br />
+The DRCM multiple node concept can scale between nodes in one
 or more data centers in the same or different geographical locations.
 <br /><br />
 <a href="https://github.com/datareel/datareel/blob/master/cluster_manager/README.txt">Online documentation</a>
