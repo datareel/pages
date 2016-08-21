@@ -195,17 +195,21 @@ or more data centers in the same or different geographical locations.
 </table>
 <!-- End Title Bar -->
 <br />
+<p>
 DRCM resources consist of crontabs, floating IP addresses, services,
 applications, and file systems. When you plan your cluster setup,
 consider the following: 
 
-* Number of nodes per cluster
-* Assigning crons based on CPU, memory, disk space and bandwidth requirements
-* Floating IP address requirements, where a service is accessed via one IP address 
-* System services: http, mysql, postgresql, etc. Which node(s) needs to run services
-* File systems: NFS, cifs, etc. Which node(s) require file system mounts
-* Applications: Programs not part of the OS with user programs and scripting
-* SSH keys: keyed authentication for file synchronization and automation
+<ul>
+<li>Number of nodes per cluster</li>
+<li>Assigning crons based on CPU, memory, disk space and bandwidth requirements</li>
+<li>Floating IP address requirements, where a service is accessed via one IP address</li> 
+<li>System services: http, mysql, postgresql, etc. Which node(s) needs to run services</li>
+<li>File systems: NFS, cifs, etc. Which node(s) require file system mounts</li>
+<li>Applications: Programs not part of the OS with user programs and scripting</li>
+<li>SSH keys: keyed authentication for file synchronization and automation</li>
+</ul>
+</p>
 
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
@@ -217,23 +221,26 @@ consider the following:
 </table>
 <!-- End Title Bar -->
 <br />
+<p>
 Developers and system admins, follow the instructions below to build
 and install the DRCM server from the source code distro:
 
+<pre>
 $ ssh username@cmnode1
 $ mkdir -pv ~/git
 $ cd ~/git
 $ git clone https://github.com/datareel/datareel.git
 $ cd ~/git/datareel/cluster_manager/drcm_server
 $ make
-$ sudo su root -c 'make install_root'
-
+$ sudo su root -c &#39;make install_root&#39;
+</pre>
 The default configuration directory is: /etc/drcm
-
-NOTE: All nodes in the same cluster must have identical “/etc/drcm”
-directories. It's recommended to design your initial configuration on a
-node you designate as a cluster entry point. Then push all “/etc/drcm”
+<br /><br />
+NOTE: All nodes in the same cluster must have identical &quot;/etc/drcm&quot;
+directories. It&#39;s recommended to design your initial configuration on a
+node you designate as a cluster entry point. Then push all &quot;/etc/drcm&quot;
 updates to all the nodes in the cluster.  
+</p>
 
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
@@ -245,15 +252,17 @@ updates to all the nodes in the cluster.
 </table>
 <!-- End Title Bar -->
 <br />
+<p>
 All nodes in a cluster must have the same auth tokens. To generate
 auth tokens for the first time or to replace existing tokens: 
-
+<pre>
 # mkdir -pv /etc/drcm/.auth
 # chmod 700 /etc/drcm/.auth
 # dd if=/dev/urandom bs=1024 count=2 > /etc/drcm/.auth/authkey
 # sha1sum /etc/drcm/.auth/authkey | cut -b1-40 > /etc/drcm/.auth/authkey.sha1
 # chmod 600 /etc/drcm/.auth/authkey /etc/drcm/.auth/authkey.sha1
-
+</pre>
+</p>
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
   <tbody>
@@ -264,15 +273,17 @@ auth tokens for the first time or to replace existing tokens:
 </table>
 <!-- End Title Bar -->
 <br />
-The default CM configuration is: /etc/drcm/cm.cfg
+<p>
+The default CM configuration is: /etc/drcm/cm.cfg<br />
 To build a CM configuration template run the following command: 
-
+<pre>
 # /usr/sbin/drcm_server --check-config
-
+</pre>
 To build a CM configuration template in another location:
-
+<pre>
 # /usr/sbin/drcm_server --config-file=/tmp/test1.cfg --check-config
-
+</pre>
+</p>
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
   <tbody>
@@ -283,15 +294,17 @@ To build a CM configuration template in another location:
 </table>
 <!-- End Title Bar -->
 <br />
+<p>
 After editing the CM configuration file you must check your CM
 configuration files for errors before starting the DRCM server: 
-
-# /usr/sbin/drcm_server --check-config | grep -i -E 'error|warn|fail|info'
- 
+<pre>
+# /usr/sbin/drcm_server --check-config | grep -i -E &#39;error|warn|fail|info&#39;
+</pre>
 If you have any errors or warnings, review and edit your configuration file:
-
+<pre>
 # /usr/sbin/drcm_server --check-config 
-
+</pre>
+</p>
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
   <tbody>
@@ -302,14 +315,15 @@ If you have any errors or warnings, review and edit your configuration file:
 </table>
 <!-- End Title Bar -->
 <br />
+<p>
 After generating the cluster configuration file you must edit the file
 and set up your global cluster configuration and node
 configuration. For nodes you include in a cluster you must have the 
 following information for each node: 
-
-Fully qualified hostname matching: uname -n
+<br /><br />
+Fully qualified hostname matching: uname -n<br />
 IP address used for cluster keep alive and CM message handling. 
-
+<pre>
 # vi /etc/drcm/cm.cfg
 
 [CM_NODE]
@@ -323,7 +337,8 @@ nodename = cmnode2
 hostname = cmnode2.example.com
 keep_alive_ip = 192.168.122.184
 ...
-
+</pre>
+<p>
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
   <tbody>
@@ -334,26 +349,29 @@ keep_alive_ip = 192.168.122.184
 </table>
 <!-- End Title Bar -->
 <br />
+<p>
 The CM_SERVER configuration setting sets values used by the DRCM
 service and all cluster nodes. Before starting the DRCM service, set
 the CM port number and host-based firewall rules: 
-
+<pre>
 # Global cluser configuration                                                                                                                                                                     
 [CM_SERVER]
 udpport = 53897
 tcpport = 53897
 ...
-
+</pre>
 Each cluster node must have host-based firewall rules allowing the
 DRCM server access to the TCP and UDP ports set in CM global
 configuration:
-
+<pre>
 # iptables -N CLUSTERMANAGER
 # iptables -I INPUT 3 -j CLUSTERMANAGER
 # iptables -A CLUSTERMANAGER -p UDP --dport 53897 -s 192.168.122.183/32 -j ACCEPT 
 # iptables -A CLUSTERMANAGER -p UDP --dport 53897 -s 192.168.122.184/32 -j ACCEPT 
 # iptables -A CLUSTERMANAGER -p TCP --dport 53897 -s 192.168.122.183/32 -j ACCEPT 
 # iptables -A CLUSTERMANAGER -p TCP --dport 53897 -s 192.168.122.184/32 -j ACCEPT 
+</pre>
+</p>
 
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
@@ -365,21 +383,22 @@ configuration:
 </table>
 <!-- End Title Bar -->
 <br />
+<p>
 All nodes in a cluster has the ability to run a global cluster
 resource as a primary function or as a backup function. DRCM has 5
 global resource categories:
-
+<br /><br />
 CM_CRONTABS: crons to run on a node with fail over to secondary nodes
 CM_IPADDRS: floating IP addresses to run on a node with fail over to secondary nodes
 CM_SERVICES: System services to run on all nodes or single nodes
 CM_APPLICATIONS: Applications to run on all nodes or single nodes
 CM_FILESYSTEMS: File system to mount on all nodes or single nodes
-
+<br /><br />
 Under each resource section you must provide a CSV list for each
 entry. All resources subsections start with a nickname. A nickname can
 be any unique name you will recognize the resource as. Nicknames are
 used by the cluster nodes to identify the global resource. 
-
+<pre>
 [CM_CRONTABS]
 # CSV format: nickname, template_file, install_location, resource_script
 system, /etc/drcm/crontabs/system_crons, /etc/cron.d, /etc/drcm/resources/crontab.sh
@@ -405,6 +424,8 @@ ldm, ldm:users, ~/util/ldm_ensure.sh, ldmadmin stop, ~/util/ldm_ensure.sh
 data, 192.168.122.1:/data, /data, /etc/drcm/resources/nfs.sh
 archive, 192.168.122.1:/archive, /archive, /etc/drcm/resources/nfs.sh
 webshare, //192.168.122.225/users/web, /home/users/web, /etc/drcm/resources/cifs.sh
+</pre>
+</p>
 
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
@@ -416,12 +437,13 @@ webshare, //192.168.122.225/users/web, /home/users/web, /etc/drcm/resources/cifs
 </table>
 <!-- End Title Bar -->
 <br />
+<p>
 The global cluster resource for a node is set in each CM_NODE
 section. Below is a 2 node cluster example of multiple crontabs with
 primary and secondary rolls. A single floating IP address for cluster
 users to access this cluster. In this example system services, file
 systems, and applications will be ran on both nodes.   
-
+<pre>
 [CM_NODE]
 nodename = cmnode1
 ...
@@ -441,6 +463,8 @@ node_backup_floating_ip_addrs = cmnode1:cmnodef
 node_services = web
 node_filesystems = data,arhive,webshare
 node_applications = ldm
+</pre>
+</p>
 
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
@@ -452,29 +476,32 @@ node_applications = ldm
 </table>
 <!-- End Title Bar -->
 <br />
+<p>
 If your cluster has one or more floating IP addresses you must
 configure a sub-interface for each floating IP. A floating IP address
 is set in the global resource configuration  CM_IPADDRS section, for
 example:
-
+<pre>
 [CM_IPADDRS]
 cmnodef, 192.168.122.180, 255.255.255.0, eth0:1, /etc/drcm/resources/ipv4addr.sh
-
+</pre>
 In the example above, we need to setup a sub-interface for eth0:
-
+<pre>
 # cd /etc/sysconfig/network-scripts
 # vi ifcfg-eth0:1
 
 DEVICE=eth0:1
 BOOTPROTO=none
 ONBOOT=yes
-
+</pre>
 Save changes and exit VI.
-
+<br /><br />
 IPADDR and PREFIX or NETMASK will be set by DRCM server when the node
 resource is activated.
-
+<pre>
 # ifup eth0:1
+</pre>
+</p>
 
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
@@ -486,47 +513,50 @@ resource is activated.
 </table>
 <!-- End Title Bar -->
 <br />
+<p>
 After setting up your cluster configuration and mirroring the
-“/etc/drcm” directory to all nodes in the cluster, start the DRCM
+&quot;/etc/drcm&quot; directory to all nodes in the cluster, start the DRCM
 server on each node. 
-
+<br /><br />
 RHEL 7/CENTOS 7:
-
+<pre>
 # systemctl start drcm_server
 # systemctl status drcm_server
-
+</pre>
 RHEL 6/CENTOS 6:
-
+<pre>
 # service drsm_server start
 # service drcm_server status
-
+</pre>
 View the cluster status monitor:
-
+<pre>
 # drcm_server --client --command=cm_stat
-
+</pre>
 View the cluster logs:
-
+<pre>
 # tail -f /var/drcm/drcm.log
-
+</pre>
 To test resource fail over:
-
+<pre>
 # systemctl stop drcm_server
 # drcm_server --client --command=cm_stat
-
+</pre>
 To test resource fail back:
-
+<pre>
 # systemctl start drcm_server
 # drcm_server --client --command=cm_stat
-
+</pre>
 After testing make the DRCM service persistent:
-
+<br /><br />
 RHEL 7/CENTOS 7:
-
+<pre>
 # systemctl enable drcm_server
-
+</pre>
 RHEL 6/CENTOS 6:
-
+<pre>
 # chkconfig drsm_server on
+</pre>
+</p>
 
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
@@ -538,17 +568,19 @@ RHEL 6/CENTOS 6:
 </table>
 <!-- End Title Bar -->
 <br />
+<p>
 The default DRCM resource script location is: /etc/drcm/resources
-
+<br /><br />
 The default installation include system resource script to manage
 crontabs, floating IP addresses, system services, NFS and CIFS files
 systems. The NFS and CIFS file system resource script will check for
 stale mounts and automatically remount if a mount is stale.  
-
+<br /><br />
 Which resource scripts used is set in the global resource
 configuration. Cluster administrators can use custom resource scripts,
 provided custom scripts accept the same input arguments as the
 resource scripts included in the distribution. 
+</p>
 
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
@@ -560,6 +592,7 @@ resource scripts included in the distribution.
 </table>
 <!-- End Title Bar -->
 <br />
+<p>
 Applications refer to programs that are not part of the operating
 system (OS) or integrated into the OS framework. Managing user
 applications in a cluster can be difficult. The DRCM server does not
@@ -567,41 +600,42 @@ manage user applications from resource scripts. This allows
 flexibility to run applications from a user or service account and use
 programs and scripting unique to each application. Applications are
 defined in the global CM_APPLICATIONS section: 
-    
+<pre>    
 [CM_APPLICATIONS]
-
+</pre>
 There are 2 formats to define a user application:
-
+<pre>
 # CSV format: nickname, user:group, start_program, stop_program
 # CSV format: nickname, user:group, start_program, stop_program, ensure_script
-
-The “user:group” must be set to the username that will run the
+</pre>
+The user and group must be set to the username that will run the
 application and the group associated with application.  
-
-The “start_program” is the program used to start the application, with
+<br /><br />
+The start_program is the program used to start the application, with
 or without input arguments. This can be multiple entries separated by
-semicolons ; 
-
-The “stop_program” is the program used to start the application, with
+semicolons 
+<br /><br />
+The stop_program is the program used to start the application, with
 or without input arguments. This can be multiple entries separated by
-semicolons ; 
-
-The “ensure_script” is a script or program that checks to ensure the
+semicolons 
+<br /><br /> 
+The ensure_script is a script or program that checks to ensure the
 application is running. If an ensure script is provided the DRCM
-server will use the “ensure_script” to watch the application. 
-
+server will use the &quot;ensure_script&quot; to watch the application. 
+<br /><br />
 NOTE: The user environment will be sourced so you do not have to use
 absolute paths to programs if the program path is defined in the user
 environment.   
-
+<br /><br />
 Some examples:
-
+<pre>
 ldm, ldm:users, ldmadmin start, ldmadmin stop
 
 ldm, ldm:users, ldmadmin clean; ldmadmin mkqueue; ldmadmin start, ldmadmin stop; ldmadmin delqueue
 
 ldm, ldm:users, ldmadmin start, ldmadmin stop, if [ -f ~/util/ldm_ensure.sh ]; then ~/util/ldm_ensure.sh; fi
-
+</pre>
+</p>
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
   <tbody>
@@ -612,20 +646,23 @@ ldm, ldm:users, ldmadmin start, ldmadmin stop, if [ -f ~/util/ldm_ensure.sh ]; t
 </table>
 <!-- End Title Bar -->
 <br />
+<p>
 DRCM provides a formatted reporting tool and raw stats you can use to
 build custom reports. To view the detailed cluster report, from any
 cluster node:
-
+<pre>
 /usr/sbin/drcm_server --client --command=cm_stat
-
+</pre>
 To create custom reports use the rstats command from any cluster node, for example:
-
+<pre>
 for CMNODE in cmnode1 cmnode2 cmnode3 cmnode4
 > do
 > echo $CMNODE
-> /usr/sbin/drcm_server --client --command=rstats | sed -n "/$CMNODE/,/$CMNODE/p" | grep -v $CMNODE
-> echo ""
+> /usr/sbin/drcm_server --client --command=rstats | sed -n &quot;/$CMNODE/,/$CMNODE/p&quot; | grep -v $CMNODE
+> echo &quot;&quot;
 > done
+</pre>
+</p>
 
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
@@ -637,52 +674,53 @@ for CMNODE in cmnode1 cmnode2 cmnode3 cmnode4
 </table>
 <!-- End Title Bar -->
 <br />
+<p>
 The DRCM distributions includes several utilities to synchronize file
 systems between a primary and secondary cluster node. This is
 typically used when a primary node is acting as a NFS server for other
 servers and/or workstations. Or for primary nodes replicating database
 directories to a cold spare.  
-
+<br /><br />
 NOTE: File replication requires public SSH key authentication for the
 backup user account that will run the replication scripts from the
-user’s crontab. NOTE: If you are using “root” to run system backups
+user&#39;s crontab. NOTE: If you are using &quot;root&quot; to run system backups
 you can limit access to key SSH authentication to run specific
 commands. Typically the back user is a special user account used just
 for running file system backups. 
-
+<br /><br />
 NOTE: Your backup user must have read/write access to the following
 directory: 
-
+<pre>
 /etc/drcm/my_cluster_conf
-
+</pre>
 Following the DRCM installation, the file system utilities are located
 in the following directory: 
-
+<pre>
 /etc/drcm/file_system_sync
-
+</pre>
 To configure a designated primary node and a designated backup node
 you must set you node configuration in the following file: 
-
+<pre>
 /etc/drcm/my_cluster_conf/my_cluster_info.sh
-
-In the “my_cluster_info.sh” file set the following variables:
-
+</pre>
+In the &quot;my_cluster_info.sh&quot; file set the following variables:
+<pre>
 # Set a simple cluster name, any name you will recognize                                                                                      
 # this cluster as, no spaces.                                                                                                                 
-export CLUSTER_NAME="NFS-CLUSTER1"
+export CLUSTER_NAME=&quot;NFS-CLUSTER1&quot;
 
 # Set IP or hostname of online storage server for shared backups                                                                              
 # This is only need if you plan to backup the NFS or database 
 # directories to a backup storage severs.
-export BACKUP_STORAGE_SERVER="192.168.122.1"
+export BACKUP_STORAGE_SERVER=&quot;192.168.122.1&quot;
 
 # Set the destination directory on the storage server                                                                                         
-export BACKUP_STORAGE_LOCATION="/backups"
+export BACKUP_STORAGE_LOCATION=&quot;/backups&quot;
 
 # Set the user name that runs you backups.                                                                                                    
 # NOTE: This user name must have keyed SSH authentication access                                                                              
 # NOTE: to the cluster nodes and backup storage server                                                                                        
-export BACKUP_USER="root"
+export BACKUP_USER=&quot;root&quot;
 
 #                                                                                                                                             
 # Set the following for 2-way file system replication                                                                                         
@@ -690,58 +728,58 @@ export BACKUP_USER="root"
 # IP address and Ethernet Interface of the cluster node with primary                                                                          
 # file systems. File systems on this node will be replicated to the                                                                           
 # backup file system in the event of a fail over to the backup node.                                                                          
-export PRIMARY_FILESYSTEMS_IP="192.168.122.111"
-export PRIMARY_FILESYSTEMS_ETH="eth0"
+export PRIMARY_FILESYSTEMS_IP=&quot;192.168.122.111&quot;
+export PRIMARY_FILESYSTEMS_ETH=&quot;eth0&quot;
 #                                                                                                                                             
 # IP address and Ethernet Interface of the backup for this cluster node,                                                                      
 # where the primary file systems are mirrored too. When the primary                                                                           
 # node is down this node will host the file systems.                                                                                          
-export BACKUP_FILESYSTEMS_IP="192.168.122.112"
-export BACKUP_FILESYSTEMS_ETH="eth0"
+export BACKUP_FILESYSTEMS_IP=&quot;192.168.122.112&quot;
+export BACKUP_FILESYSTEMS_ETH=&quot;eth0&quot;
 
 # Allow RSYNC on a diffent IP/Interface if high bandwidth required to sync file systems
 # These settings are used to move high bandwidth consumption to another Ethernet interface 
 # and/or network.                                                         
-## export PRIMARY_FILESYSTEMS_RSYNC_IP=""                                                                                                     
-## export BACKUP_FILESYSTEMS_RSYNC_IP=""
-
+## export PRIMARY_FILESYSTEMS_RSYNC_IP=&quot;&quot;                                                                                                     
+## export BACKUP_FILESYSTEMS_RSYNC_IP=&quot;&quot;
+</pre>
 Once you setup your configuration, edit the following file to run a
 test between the primary and backup node. As the backup user on the
 primary node: 
-
+<pre>
 $ vi /etc/drcm/my_cluster_conf/testfs_sync_list.sh
 
 RsyncMirror /testfs
-
+</pre>
 NOTE: Mirroring replicated an exact copy of the /testfs file
 system. This means files will be copied and deleted as new files are
 added or removed. If you want to keep copies of files removed on the
 backup system use the following line 
-
+<pre>
 RsyncCopy /testfs
-
+</pre>
 NOTE: Prior to testing you must create the /testfs directory on both
 cluster nodes and make sure your backup user has read/write access to
 the /testfs directory.
-
+<br /><br />
 Make sure to copy all changes in the /etc/drcm directory to the backup
 node before you do any testing. To test, as the backup user on the
 primary node, execute the following script: 
-
+<pre>
 $ /etc/drcm/file_system_sync/sync_testfs.sh
-
+</pre>
 This will replicate the contents of the /testfs directory to the
 backup node. As the backup user on the backup node, execute the same
 script: 
-
+<pre>
 $ /etc/drcm/file_system_sync/sync_testfs.sh
-
+</pre>
 You should see the following output on the backup node:
-
+<br /><br />
 Checking to see if failback sync flag exists
 We have no sync flag for testfs files
 No file sync to primary cluster node will be performed
-
+<br /><br />
 If the primary node is down the backup node will update the /testfs
 directory until the primary node is back online. Once the primary node
 is back online, all files on the backup will be replicated back to the
@@ -749,61 +787,61 @@ primary node. Once the back node has finished replication, the primary
 node replicates to the back node. To test a primary to backup fail
 over and fail back, execute the following script on the primary node,
 as root or an admin account with sudo rights: 
-
+<pre>
 # /etc/drcm/utils/manual_fs_failover.sh
-
+</pre>
 To fail back, start the drcm_server on the primary node. 
-
+<br /><br />
 After verifying 2-way file replication is work between the primary and
 backup node, add the following line to the backup users crontab. On
 the primary node as the backup user: 
-
+<pre>
 $ crontab -e
 
 */5 * * * *  /etc/drcm/file_system_sync/sync_testfs.sh > /dev/null 2>&1
-
+</pre>
 On the backup node:
-
+<pre>
 $ crontab -e
 
 * * * * * /etc/drcm/file_system_sync/sync_testfs.sh > /dev/null 2>&1
-
+</pre>
 This will replicate /testfs to the backup node every 5 minutes. The
 backup node will watch for primary node outages every minute. In the
 event of a fail back, the backup node will replicate /testfs back to
 primary within one minte. 
-
+<br /><br />
 The DRCM distribution includes pre-built file replication scripts you
 can add to the back user’s crontab: 
-
+<br /><br />
 On primary node:
-
+<pre>
 */5 * * * *  /etc/drcm/file_system_sync/sync_mysql.sh > /dev/null 2>&1
 */5 * * * *  /etc/drcm/file_system_sync/sync_pgsql.sh > /dev/null 2>&1
 */6 * * * *  /etc/drcm/file_system_sync/sync_cifs.sh > /dev/null 2>&1
 */7 * * * *  /etc/drcm/file_system_sync/sync_nfs.sh > /dev/null 2>&1
 */8 * * * *  /etc/drcm/file_system_sync/sync_www.sh > /dev/null 2>&1
 */11 * * * * /etc/drcm/file_system_sync/sync_other.sh > /dev/null 2>&1
-
+</pre>
 On backup node:
-
+<pre>
 * * * * * /etc/drcm/file_system_sync/sync_mysql.sh > /dev/null 2>&1
 * * * * * /etc/drcm/file_system_sync/sync_pgsql.sh > /dev/null 2>&1
 * * * * * /etc/drcm/file_system_sync/sync_cifs.sh > /dev/null 2>&1
 * * * * * /etc/drcm/file_system_sync/sync_nfs.sh > /dev/null 2>&1
 * * * * * /etc/drcm/file_system_sync/sync_www.sh > /dev/null 2>&1
 * * * * * /etc/drcm/file_system_sync/sync_other.sh > /dev/null 2>&1
-
+</pre>
 All the configuration files will be autogened in the following:
-
+<pre>
 /etc/drcm/my_cluster_conf
-
-NOTE: Your backup user must have write access to the “my_cluster_conf”
+</pre>
+NOTE: Your backup user must have write access to the &quot;my_cluster_conf&quot;
 directory. 
-
-Edit the "/etc/drcm/my_cluster_conf/*sync_list.sh" config files to
+<br /><br />
+Edit the &quot;/etc/drcm/my_cluster_conf/*sync_list.sh&quot; config files to
 setup the specific directories to be replicated. 
-
+</p>
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
   <tbody>
@@ -814,75 +852,76 @@ setup the specific directories to be replicated.
 </table>
 <!-- End Title Bar -->
 <br />
+<p>
 To setup an hourly cluster monitor with email and/or text message
 alerts, add the following line to root’s crontab: 
-
+<pre>
 00 * * * * /etc/drcm/utils/watch_cluster.sh > /dev/null 2>&1
-
+</pre>
 The watch_cluster.sh script will automatically generate the following
 an alert list configuration file for you: 
-
+<pre>
 /etc/drcm/my_cluster_conf/cm_alert_list.sh
-
+</pre>
 NOTE: If you run the watch_cluster.sh script as another user, the user
 must have read access to the /etc/drcm/.auth directory and auth keys.
-
-In your “cm_alert_list.sh” file set up the email accounts and/or SMS
+<br /><br />
+In your &quot;cm_alert_list.sh&quot; file set up the email accounts and/or SMS
 accounts:
-
+<pre>
 # vi /etc/drcm/my_cluster_conf/cm_alert_list.sh
 
 # Set your comma delimited alert lists here
-export EMAILlist="root,name@example.com"
-export TEXTlist="555-555-5555@mobile_domain.com"
-
+export EMAILlist=&quot;root,name@example.com&quot;
+export TEXTlist=&quot;555-555-5555@mobile_domain.com&quot;
+</pre>
 NOTE: Each mobile carrier has a domain for sending an email as a text
 message, for example to send SMS messages to a Verizon number: 
-
+<pre>
 555-555-5555@vtext.com
-
+</pre>
 By default the DRCM alerts are limited to send messages every 4 hours,
 once an the first message is sent. This is done to avoid a flood email
 and/or test messages during periods of server outages or server
 maintenance.  
-
+<br /><br />
 If your clusters nodes do not have postfix mail configured, you need
 to determine which Linux server in your data center is setup to relay
 messages. To setup postfix mail to connect to relay host: 
-
+<pre>
 # vi /etc/postfix/main.cf
 
 relayhost = 192.168.122.1
-
+</pre>
 Restart the postfix service and watch the mail log:
-
+<pre>
 # tail -f /var/log/maillog
-
+</pre>
 To test the alerting function:
-
+<pre>
 $ vi ~/test_alert.sh 
 
 #!/bin/bash
 
-export ALERTTIMESPANHOURS="0"
-SUBJECT="[!ACTION!] Cluster Alert Test Message"
-BODY="This is an cluster manager alert test message"
+export ALERTTIMESPANHOURS=&quot;0&quot;
+SUBJECT=&quot;[!ACTION!] Cluster Alert Test Message&quot;
+BODY=&quot;This is an cluster manager alert test message&quot;
 source /etc/drcm/utils/send_alert.sh
-send_alert "${SUBJECT}" "${BODY}"
-
+send_alert &quot;${SUBJECT}&quot; &quot;${BODY}&quot;
+</pre>
 Save file and exit VI.
-
+<pre>
 $ chmod 755 ~/test_alert.sh
 $ ~/test_alert.sh
-
+</pre>
 NOTE: The DRCM alert functions can be use by other system admin
 functions by writing scripts similar to the above example. 
-
+<br /><br />
 If you do not have a Linux system setup up as a relay host, you can
 setup postfix on one cluster node as a smart host and allow other
 nodes to relay messages. For more information on setting up postfix
-mail as a smart host, search online for: “postfix smarthost setup”
-
+mail as a smart host, search online for: &quot;postfix smarthost setup&quot;
+</p>
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
   <tbody>
@@ -893,16 +932,17 @@ mail as a smart host, search online for: “postfix smarthost setup”
 </table>
 <!-- End Title Bar -->
 <br />
+<p>
 The first DRCM release was successfully tested on VM and bare metal
 clusters. Implementation will continue on many data systems. All
 source code changes and bug fixes will be release in this open source
 distribution.    
-
+<br /><br />
 Remaining work to be added to this open source project:
-
-* RPM install for CENTOS/RHEL 6.X and 7.X
-* Add TCP cluster protocol for WAN based clusters
-
+<br /><br />
+RPM install for CENTOS/RHEL 6.X and 7.X<br />
+Add TCP cluster protocol for WAN based clusters
+</p>
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
   <tbody>
@@ -913,9 +953,9 @@ Remaining work to be added to this open source project:
 </table>
 <!-- End Title Bar -->
 <br />
+<p>
 https://github.com/datareel/datareel/issues
-
-
+</p>
 <hr color="#000000" noshade="noshade" size="1" /><!-- Start Copyright Information -->
 <p><font color="000000">Copyright &copy; 2001-2016&nbsp;DataReel OpenSource</font></p>
 
