@@ -57,28 +57,9 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="index.html">C/C++ Library</a></li>
-            <li><a href="examples/index.html">Example Programs</a></li>
-            <li><a href="classes/index.html">C++ Classes</a></li>
-            <li><a href="utils/index.html">Utility Programs</a></li>
-	    <!-- Start dropdown menu -->
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle"
-                 data-toggle="dropdown" role="button"
-                 aria-haspopup="true" aria-expanded="true">Menu
-                <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-		<li><a href="#Overview">Overview</a></li>
-		<li><a href="#Features">Features</a></li>
-		<li><a href="#License">License</a></li>
-		<li><a href="#SupportedPlatforms">Supported Platforms</a></li>
-		<li><a href="#SupportedCompilers">Supported Compilers</a></li>
-		<li><a href="#PackageMap">Package Map</a></li>
-		<li><a href="#ExamplePrograms">Example Programs</a></li>
-		<li><a href="#UNIXLIB">Building</a></li>
-              </ul>
-            </li>
-	    <!-- End dropdown menu -->
+            <li><a href="../clib/index.html">C/C++ Library</a></li>
+            <li class="active"><a href="index.html">Cluster Manager</a></li>
+            <li><a href="../drlb/index.html">Load Balancer</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -109,9 +90,9 @@
 <a href="#Overview">Overview</a><br />
 <a href="#DocumentedUsage">Documented Usage</a><br />
 <a href="#Prerequisites">Prerequisites</a><br />
-<a href="#BuildingandInstalling">Building and Installing</a><br />
-<a href="#DRCMAuthTokens">DRCM Auth Tokens</a><br />
 <a href="#BuildingandInstallingFromSourceCode">Building and Installing From Source Code</a><br />
+<a href="#DRCMAuthTokens">DRCM Auth Tokens</a><br />
+<a href="#BuildingCMConfigurationFiles">Building CM Configuration Files</a><br />
 <a href="#TestingCMConfigurationFiles">Testing CM Configuration Files</a><br />
 <a href="#CMNodeHostnameandIPSettings">CM Node Hostname and IP Settings</a><br />
 <a href="#CMGlobalConfigurationSettings">CM Global Configuration Settings</a><br />
@@ -124,6 +105,8 @@
 <a href="#ClusterMonitorandReports">Cluster Monitor and Reports</a><br />
 <a href="#2wayfilereplication">2-way file replication</a><br />
 <a href="#Settingupclusteralerts">Setting up cluster alerts</a><br />
+<a href="heartbeat_to_drcm.txt">Transition from heartbeat to DRCM</a><br />
+
 <a href="#RemainingWorkonThisProject">Remaining Work on This Project</a><br />
 <a href="#SupportandBugTracking">Support and Bug Tracking</a><br />
 
@@ -164,6 +147,8 @@ failure.
 The DRCM multiple node concept can scale between nodes in one
 or more data centers in the same or different geographical locations.
 </p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
   <tbody>
@@ -174,6 +159,7 @@ or more data centers in the same or different geographical locations.
 </table>
 <!-- End Title Bar -->
 <br />
+<p>
 <ul>
 <li> All commands prefixed with the $ prompt indicate the command is
   executed from a user account or from a service account. </li>
@@ -184,6 +170,8 @@ or more data centers in the same or different geographical locations.
 <li> In a configuration file example a ... symbol indicates omitted content
   for brevity.</li>   
 </ul>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
@@ -210,12 +198,13 @@ consider the following:
 <li>SSH keys: keyed authentication for file synchronization and automation</li>
 </ul>
 </p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
   <tbody>
     <tr>
-      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="BuildingandInstalling">Building and Installing</a></b></font></td>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="BuildingandInstallingFromSourceCode">Building and Installing From Source Code</a></b></font></td>
     </tr>
   </tbody>
 </table>
@@ -241,6 +230,7 @@ directories. It&#39;s recommended to design your initial configuration on a
 node you designate as a cluster entry point. Then push all &quot;/etc/drcm&quot;
 updates to all the nodes in the cluster.  
 </p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
@@ -258,11 +248,13 @@ auth tokens for the first time or to replace existing tokens:
 <pre>
 # mkdir -pv /etc/drcm/.auth
 # chmod 700 /etc/drcm/.auth
-# dd if=/dev/urandom bs=1024 count=2 > /etc/drcm/.auth/authkey
-# sha1sum /etc/drcm/.auth/authkey | cut -b1-40 > /etc/drcm/.auth/authkey.sha1
+# dd if=/dev/urandom bs=1024 count=2 &gt; /etc/drcm/.auth/authkey
+# sha1sum /etc/drcm/.auth/authkey | cut -b1-40 &gt; /etc/drcm/.auth/authkey.sha1
 # chmod 600 /etc/drcm/.auth/authkey /etc/drcm/.auth/authkey.sha1
 </pre>
 </p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
   <tbody>
@@ -284,6 +276,8 @@ To build a CM configuration template in another location:
 # /usr/sbin/drcm_server --config-file=/tmp/test1.cfg --check-config
 </pre>
 </p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
   <tbody>
@@ -305,6 +299,8 @@ If you have any errors or warnings, review and edit your configuration file:
 # /usr/sbin/drcm_server --check-config 
 </pre>
 </p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
   <tbody>
@@ -333,12 +329,14 @@ keep_alive_ip = 192.168.122.183
 ...
 
 [CM_NODE]
-nodename = cmnode2                                                                                                                                            
+nodename = cmnode2
 hostname = cmnode2.example.com
 keep_alive_ip = 192.168.122.184
 ...
 </pre>
 <p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
   <tbody>
@@ -354,7 +352,7 @@ The CM_SERVER configuration setting sets values used by the DRCM
 service and all cluster nodes. Before starting the DRCM service, set
 the CM port number and host-based firewall rules: 
 <pre>
-# Global cluser configuration                                                                                                                                                                     
+# Global cluser configuration
 [CM_SERVER]
 udpport = 53897
 tcpport = 53897
@@ -372,6 +370,7 @@ configuration:
 # iptables -A CLUSTERMANAGER -p TCP --dport 53897 -s 192.168.122.184/32 -j ACCEPT 
 </pre>
 </p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
@@ -426,6 +425,7 @@ archive, 192.168.122.1:/archive, /archive, /etc/drcm/resources/nfs.sh
 webshare, //192.168.122.225/users/web, /home/users/web, /etc/drcm/resources/cifs.sh
 </pre>
 </p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
@@ -465,6 +465,7 @@ node_filesystems = data,arhive,webshare
 node_applications = ldm
 </pre>
 </p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
@@ -502,6 +503,7 @@ resource is activated.
 # ifup eth0:1
 </pre>
 </p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
@@ -557,6 +559,7 @@ RHEL 6/CENTOS 6:
 # chkconfig drsm_server on
 </pre>
 </p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
@@ -581,6 +584,7 @@ configuration. Cluster administrators can use custom resource scripts,
 provided custom scripts accept the same input arguments as the
 resource scripts included in the distribution. 
 </p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
@@ -636,6 +640,8 @@ ldm, ldm:users, ldmadmin clean; ldmadmin mkqueue; ldmadmin start, ldmadmin stop;
 ldm, ldm:users, ldmadmin start, ldmadmin stop, if [ -f ~/util/ldm_ensure.sh ]; then ~/util/ldm_ensure.sh; fi
 </pre>
 </p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
   <tbody>
@@ -656,13 +662,14 @@ cluster node:
 To create custom reports use the rstats command from any cluster node, for example:
 <pre>
 for CMNODE in cmnode1 cmnode2 cmnode3 cmnode4
-> do
-> echo $CMNODE
-> /usr/sbin/drcm_server --client --command=rstats | sed -n &quot;/$CMNODE/,/$CMNODE/p&quot; | grep -v $CMNODE
-> echo &quot;&quot;
-> done
+&gt; do
+&gt; echo $CMNODE
+&gt; /usr/sbin/drcm_server --client --command=rstats | sed -n &quot;/$CMNODE/,/$CMNODE/p&quot; | grep -v $CMNODE
+&gt; echo &quot;&quot;
+&gt; done
 </pre>
 </p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
@@ -675,7 +682,7 @@ for CMNODE in cmnode1 cmnode2 cmnode3 cmnode4
 <!-- End Title Bar -->
 <br />
 <p>
-The DRCM distributions includes several utilities to synchronize file
+The DRCM distribution includes several utilities to synchronize file
 systems between a primary and secondary cluster node. This is
 typically used when a primary node is acting as a NFS server for other
 servers and/or workstations. Or for primary nodes replicating database
@@ -705,42 +712,42 @@ you must set you node configuration in the following file:
 </pre>
 In the &quot;my_cluster_info.sh&quot; file set the following variables:
 <pre>
-# Set a simple cluster name, any name you will recognize                                                                                      
-# this cluster as, no spaces.                                                                                                                 
+# Set a simple cluster name, any name you will recognize
+# this cluster as, no spaces.
 export CLUSTER_NAME=&quot;NFS-CLUSTER1&quot;
 
-# Set IP or hostname of online storage server for shared backups                                                                              
+# Set IP or hostname of online storage server for shared backups
 # This is only need if you plan to backup the NFS or database 
 # directories to a backup storage severs.
 export BACKUP_STORAGE_SERVER=&quot;192.168.122.1&quot;
 
-# Set the destination directory on the storage server                                                                                         
+# Set the destination directory on the storage server
 export BACKUP_STORAGE_LOCATION=&quot;/backups&quot;
 
-# Set the user name that runs you backups.                                                                                                    
-# NOTE: This user name must have keyed SSH authentication access                                                                              
-# NOTE: to the cluster nodes and backup storage server                                                                                        
+# Set the user name that runs you backups.
+# NOTE: This user name must have keyed SSH authentication access
+# NOTE: to the cluster nodes and backup storage server
 export BACKUP_USER=&quot;root&quot;
 
-#                                                                                                                                             
-# Set the following for 2-way file system replication                                                                                         
-#                                                                                                                                             
-# IP address and Ethernet Interface of the cluster node with primary                                                                          
-# file systems. File systems on this node will be replicated to the                                                                           
-# backup file system in the event of a fail over to the backup node.                                                                          
+#
+# Set the following for 2-way file system replication
+#
+# IP address and Ethernet Interface of the cluster node with primary
+# file systems. File systems on this node will be replicated to the
+# backup file system in the event of a fail over to the backup node.
 export PRIMARY_FILESYSTEMS_IP=&quot;192.168.122.111&quot;
 export PRIMARY_FILESYSTEMS_ETH=&quot;eth0&quot;
-#                                                                                                                                             
-# IP address and Ethernet Interface of the backup for this cluster node,                                                                      
-# where the primary file systems are mirrored too. When the primary                                                                           
-# node is down this node will host the file systems.                                                                                          
+#
+# IP address and Ethernet Interface of the backup for this cluster node,
+# where the primary file systems are mirrored too. When the primary
+# node is down this node will host the file systems.
 export BACKUP_FILESYSTEMS_IP=&quot;192.168.122.112&quot;
 export BACKUP_FILESYSTEMS_ETH=&quot;eth0&quot;
 
 # Allow RSYNC on a diffent IP/Interface if high bandwidth required to sync file systems
 # These settings are used to move high bandwidth consumption to another Ethernet interface 
 # and/or network.                                                         
-## export PRIMARY_FILESYSTEMS_RSYNC_IP=&quot;&quot;                                                                                                     
+## export PRIMARY_FILESYSTEMS_RSYNC_IP=&quot;&quot;
 ## export BACKUP_FILESYSTEMS_RSYNC_IP=&quot;&quot;
 </pre>
 Once you setup your configuration, edit the following file to run a
@@ -798,13 +805,13 @@ the primary node as the backup user:
 <pre>
 $ crontab -e
 
-*/5 * * * *  /etc/drcm/file_system_sync/sync_testfs.sh > /dev/null 2>&1
+*/5 * * * *  /etc/drcm/file_system_sync/sync_testfs.sh &gt; /dev/null 2&gt;&amp;1
 </pre>
 On the backup node:
 <pre>
 $ crontab -e
 
-* * * * * /etc/drcm/file_system_sync/sync_testfs.sh > /dev/null 2>&1
+* * * * * /etc/drcm/file_system_sync/sync_testfs.sh &gt; /dev/null 2&gt;&amp;1
 </pre>
 This will replicate /testfs to the backup node every 5 minutes. The
 backup node will watch for primary node outages every minute. In the
@@ -816,21 +823,21 @@ can add to the back user’s crontab:
 <br /><br />
 On primary node:
 <pre>
-*/5 * * * *  /etc/drcm/file_system_sync/sync_mysql.sh > /dev/null 2>&1
-*/5 * * * *  /etc/drcm/file_system_sync/sync_pgsql.sh > /dev/null 2>&1
-*/6 * * * *  /etc/drcm/file_system_sync/sync_cifs.sh > /dev/null 2>&1
-*/7 * * * *  /etc/drcm/file_system_sync/sync_nfs.sh > /dev/null 2>&1
-*/8 * * * *  /etc/drcm/file_system_sync/sync_www.sh > /dev/null 2>&1
-*/11 * * * * /etc/drcm/file_system_sync/sync_other.sh > /dev/null 2>&1
+*/5 * * * *  /etc/drcm/file_system_sync/sync_mysql.sh &gt; /dev/null 2&gt;&amp;1
+*/5 * * * *  /etc/drcm/file_system_sync/sync_pgsql.sh &gt; /dev/null 2&gt;&amp;1
+*/6 * * * *  /etc/drcm/file_system_sync/sync_cifs.sh &gt; /dev/null 2&gt;&amp;1
+*/7 * * * *  /etc/drcm/file_system_sync/sync_nfs.sh &gt; /dev/null 2&gt;&amp;1
+*/8 * * * *  /etc/drcm/file_system_sync/sync_www.sh &gt; /dev/null 2&gt;&amp;1
+*/11 * * * * /etc/drcm/file_system_sync/sync_other.sh &gt; /dev/null 2&gt;&amp;1
 </pre>
 On backup node:
 <pre>
-* * * * * /etc/drcm/file_system_sync/sync_mysql.sh > /dev/null 2>&1
-* * * * * /etc/drcm/file_system_sync/sync_pgsql.sh > /dev/null 2>&1
-* * * * * /etc/drcm/file_system_sync/sync_cifs.sh > /dev/null 2>&1
-* * * * * /etc/drcm/file_system_sync/sync_nfs.sh > /dev/null 2>&1
-* * * * * /etc/drcm/file_system_sync/sync_www.sh > /dev/null 2>&1
-* * * * * /etc/drcm/file_system_sync/sync_other.sh > /dev/null 2>&1
+* * * * * /etc/drcm/file_system_sync/sync_mysql.sh &gt; /dev/null 2&gt;&amp;1
+* * * * * /etc/drcm/file_system_sync/sync_pgsql.sh &gt; /dev/null 2&gt;&amp;1
+* * * * * /etc/drcm/file_system_sync/sync_cifs.sh &gt; /dev/null 2&gt;&amp;1
+* * * * * /etc/drcm/file_system_sync/sync_nfs.sh &gt; /dev/null 2&gt;&amp;1
+* * * * * /etc/drcm/file_system_sync/sync_www.sh &gt; /dev/null 2&gt;&amp;1
+* * * * * /etc/drcm/file_system_sync/sync_other.sh &gt; /dev/null 2&gt;&amp;1
 </pre>
 All the configuration files will be autogened in the following:
 <pre>
@@ -842,6 +849,8 @@ directory.
 Edit the &quot;/etc/drcm/my_cluster_conf/*sync_list.sh&quot; config files to
 setup the specific directories to be replicated. 
 </p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
   <tbody>
@@ -856,7 +865,7 @@ setup the specific directories to be replicated.
 To setup an hourly cluster monitor with email and/or text message
 alerts, add the following line to root’s crontab: 
 <pre>
-00 * * * * /etc/drcm/utils/watch_cluster.sh > /dev/null 2>&1
+00 * * * * /etc/drcm/utils/watch_cluster.sh &gt; /dev/null 2&gt;&amp;1
 </pre>
 The watch_cluster.sh script will automatically generate the following
 an alert list configuration file for you: 
@@ -922,6 +931,8 @@ setup postfix on one cluster node as a smart host and allow other
 nodes to relay messages. For more information on setting up postfix
 mail as a smart host, search online for: &quot;postfix smarthost setup&quot;
 </p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
   <tbody>
@@ -939,10 +950,13 @@ source code changes and bug fixes will be release in this open source
 distribution.    
 <br /><br />
 Remaining work to be added to this open source project:
-<br /><br />
-RPM install for CENTOS/RHEL 6.X and 7.X<br />
-Add TCP cluster protocol for WAN based clusters
+<ul>
+<li>RPM install for CENTOS/RHEL 6.X and 7.X</li>
+<li>Add TCP cluster protocol for WAN based clusters</li>
+</ul>
 </p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
   <tbody>
@@ -954,8 +968,10 @@ Add TCP cluster protocol for WAN based clusters
 <!-- End Title Bar -->
 <br />
 <p>
-https://github.com/datareel/datareel/issues
+<a href="https://github.com/datareel/datareel/issues">https://github.com/datareel/datareel/issues</a>
 </p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+<br />
 <hr color="#000000" noshade="noshade" size="1" /><!-- Start Copyright Information -->
 <p><font color="000000">Copyright &copy; 2001-2016&nbsp;DataReel OpenSource</font></p>
 
