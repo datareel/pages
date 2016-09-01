@@ -109,6 +109,7 @@
 <a href="#Bufferoverflowsettings">Buffer overflow settings</a><br />
 <a href="#Advancedsocketsettings">Advanced socket settings</a><br />
 <a href="#DRLBprocessmonitoring">DRLB process monitoring</a><br />
+<a href="#SettingOpenFileLimits">Setting Open File Limits</a><br />
 <a href="#LinuxKernelTuning">Linux Kernel Tuning</a><br />
 <a href="#TestingwithApache">Testing with Apache</a><br />
 <a href="#Remainingworkonthisproject">Remaining work on this project</a><br />
@@ -1190,6 +1191,69 @@ $ for p in $pids; do ls -l --color=none /proc/$p/fd; done
 </p>
 <p class="pull-left"><a href="#">Back to top</a></p>
 
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="SettingOpenFileLimits">Setting Open File Limits</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
+NOTICE: Any setting you make to change default kernel limits and/or
+user limits must be implemented with caution. All changes should be
+thoroughly tested on development servers whenever possible. If you are
+not careful when adjusting default limits you can render your server
+inoperable.
+<br /><br />
+In RHEL6/CENTOS6 and RHEL7/CENTOS7 the default number of file,
+including sockets, is 1024. For load balancer applications with a high
+volume of connections you may need to increase the default value.
+<br /><br />
+For RHEL7/CENTOS7, the global ulimit for nofiles is ignored for
+systemd services. The nofile limit is now set in the service file:
+<pre>
+# more /etc/systemd/system/drlb_server.service
+
+[Service]
+LimitNOFILE=65535
+</pre>
+For RHEL7/CENTOS7 runtime testing you can change the nofile limit for
+a process using the prlimit command:
+<pre>
+# ps -ef | grep drlb_server | grep -v grep
+# prlimit --pid <pid> --nofile=32767:65535
+</pre>
+For RHEL6/CENTOS6, you can increase the max number of open files by
+increasing the ulimit value:
+<pre>
+# vi /etc/security/limits.d/nofile.conf
+
+*    soft    nofile 32767
+*    hard    nofile 65535
+</pre>
+This change will require a reboot.
+<br /><br />
+For RHEL6/CENTOS6 runtime testing you can manually set the nofile
+limits and start the DRLB server the same shell:
+<pre>
+# ulimit -n 32767
+# ulimit -H -n 65535
+</pre>
+To check the file limits for the DRLB process(es):
+<pre>
+# pids=$(ps -ef | grep drlb_server | grep -v grep | awk &#39;{ print $2 }&#39;)
+# for p in $pids; do cat /proc/$p/limits | grep -i file; done
+</pre>
+The Max open files setting should match your ulimit settings for soft
+and hard limits. To see how many files the process(es) have open:
+<pre>
+# for p in $pids; do ls -l --color=none /proc/$p/fd; done
+</pre>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
   <tbody>
@@ -1201,6 +1265,12 @@ $ for p in $pids; do ls -l --color=none /proc/$p/fd; done
 <!-- End Title Bar -->
 <br />
 <p>
+NOTICE: Any setting you make to change default kernel settings and/or
+user limits must be implemented with caution. All changes should be
+thoroughly tested on development servers whenever possible. If you are
+not careful when adjusting default kernel settings you can render your 
+server inoperable.
+<br /><br />
 Load balancing will require kernel tuning based the volume of traffic
 and type of TCP service you are load balancing. NOTE: The values in
 listed below are based on extremely high volume. Depending on your
