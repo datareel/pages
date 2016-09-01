@@ -89,36 +89,45 @@
 <p>
 The DataReel load balancer (LB) is a software based TCP load balancing
 solution designed to run on Linux operating systems. The DRLB project
-was designed to handle a large number of persistent TCP connections,
-specifically for the unidata Local Data Manager (LDM) protocol. The
-DRLB source code is distributed as an open source project under the
-GNU general public license. DRLB is an adaptive load balancing
-environment where the source code can be modified to meet the needs of
-your server and network environment. 
+was designed to handle any type of TCP connection, acting as a front
+end server distributing high volumes of TCP connections to multiple
+back end servers. Load balancing protects your back end servers from
+saturation when you have more clients connection than any one server
+can handle. The DRLB server can be used as a high availability
+resource to provide seamless server fail over. In signal server
+environments the DRLB server can provide connection limits and cached
+buffing.
 </p>
-<h3>Why Another Load Balancer</h3>
+<h3>Features</h3>
 <p>
-Most of the readily available load balancing packages are designed for
-HTTP traffic, serving Web pages. DRLB was initially designed for
-persistent TCP connections where the client/server connections must
-remain connected and transfer bi-directional data of varying
-size. HTTP connections frequently connect and disconnect and work well
-with round robin and weighted round robin load balancing. In the case
-of persistent connections the load balancer must be able to
-dynamically assign  nodes to specific clients and distribute traffic
-based on the percent of persistent connections. DRLB allows systems
-administrators to dynamically route IP addresses to specific backend
-nodes, with the ability to automatically fail over to other nodes. The
-second design phase of DRLB was targeted at HTTP servers used as Web
-page and data servers. Many data sources on FTP servers were converted
-to HTTP or HTTPS downloads. In cases where existing HTTP servers were
-used due to limited public IP address space, many contention issues
-with server resources resulted. Web page users experienced massive
-slow downs rendering Web pages while competing with data downloads on
-the same server. Using DRLB in distributed/assigned mode allows the
-data downloads to be isolated from the Web pages, still using only one
-public Web server IP address.
-<br /><br />
+<ul>
+<li>Round robin: Distribute connections equally to server nodes in order received.</li>
+
+<li>Weighted: Distribute connections based on a weight value assigned to each server node.</li>
+
+<li>Distributed: Distribute connections based on a load percentage assigned to each server node.</li>
+
+<li>Assigned: Assign connections to specific server nodes with the
+  option to use round robin, weighted, or distributed load balancing
+  for fail over and unassigned connections.</li>
+
+<li>Connection throttling: Prevent server saturation by throttling
+  connections based on preset connections values or number of
+  connection per second.</li>
+
+<li>Statistics: Option to log connection information and monitor
+  connections per second in real time.</li>
+
+<li>Connection limits: Option to set connections per server node or all
+  server nodes.</li>
+
+<li>Caching: Buffer server connections with option to set custom buffer
+  sizes.</li>
+
+<li>Buffer overflow detection: Option to detect buffer overflows for
+  specific applications.</li>
+</ul>
+
 <a href="drlb/index.html">Online documentation</a>
 <br /><br />
 <a href="https://github.com/datareel/datareel/blob/master/load_balancer">Source
