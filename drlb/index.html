@@ -96,6 +96,7 @@
 * Building a default configuration file
 * Test DRLB configurations files
 * Running DRLB as a service
+* Configuration Changes
 * Setting the listening port
 * Round robin configuration
 * Weighted configuration
@@ -265,42 +266,80 @@ $ sudo su -c &#39;make install_root&#39;
 
 <!--
 
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name=""></a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<p>
 
-Building a default configuration file:
--------------------------------------
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="Buildingadefaultconfigurationfile">Building a default configuration file</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<p>
 The DRLB server is deigned as generic load balancer and can handle
 many LB configurations. To build an LB configuration start with a
 generic template. To build a configuration template, run the following
 command: 
-
+<pre>
 # /usr/sbin/drlb_server --check-config --config-file=/etc/drlb/http_lb.cfg
 
 Running DRLB configuration check and exiting
 Loading or building config file http_lb.cfg
 DRLB configuration file not found. Building default file and exiting
+</pre>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
-Test DRLB configurations files:
-------------------------------
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="TestDRLBconfigurationsfiles">Test DRLB configurations files</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<p>
 After editing a DRLB configuration file you must check your
 configuration file for errors before starting the DRLB server:
-
+<pre>
 # /usr/sbin/drlb_server --check-config --config-file=/etc/drlb/http_lb.cfg | grep -i -E &#39;error|warn|fail|info|notice&#39;
-
+</pre>
 If you have any errors or warnings, review and edit your configuration file:
-
+<pre>
 # /usr/sbin/drlb_server --check-config --config-file=/etc/drlb/http_lb.cfg
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
-Running DRLB as a service:
--------------------------
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="RunningDRLBasaservice">Running DRLB as a service:</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<p>
 DRLB is designed to run multiple load balancer configurations on
 single Linux server. When the drlb_server service is started, the
 service initialization script checks the following file for active
 server configurations:
-
+<br /><br />
 /etc/drlb/active_configs.list
-
+<br /><br />
 To add configurations, edit the active configs list:
-
+<pre>
 # vi /etc/drlb/active_configs.list
 
 # List of active DRLB configurations
@@ -311,12 +350,12 @@ To add configurations, edit the active configs list:
 
 # List all the LB configs you need to start on this server.
 # All entries must use an absolute path to the .cfg file.
-
+</pre>
 Save your changes and exit vi.
-
+<br /><br />
 If you want to use a single configuration or override the DRLB service 
 defaults, edit the following file:
-
+<pre>
 # vi /etc/sysconfig/drlb_server
 
 # File used to override the init script VARs
@@ -332,22 +371,53 @@ defaults, edit the following file:
 
 # NOTE: Set for single config if you wish to run only on LB server
 ###SINGLECONFIG=/etc/drlb/http_rr_test.cfg
-
+</pre>
 After setting up your DRLB configuration files and your active
 configuration list, start the DRCM
 server and make the DRCM service persistent:
-
+<br /><br />
 RHEL 7/CENTOS 7:
-
+<pre>
 # systemctl start drlb_server
 # systemctl status drlb_server
 # systemctl enable drcm_server
-
+</pre>
 RHEL 6/CENTOS 6:
-
+<pre>
 # service drlb_server start
 # service drlb_server status
 # chkconfig drcm_server on
+</pre>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
+Configuration Changes
+---------------------
+All changes to a DRCM configuration file or assignment rules will
+require a server restart:
+
+RHEL 7/CENTOS 7:
+
+# systemctl restart drlb_server
+
+RHEL 6/CENTOS 6:
+
+# service drlb_server restart
+
+For DRLB configurations running more than one LB server you can
+manually restart the each server instance:
+
+# ps -ef | grep drlb_server | grep -v grep
+
+root 17058 1 0 23:57 ? 00:00:00 /usr/sbin/drlb_server --config-file=/etc/drlb/http_rr_test.cfg
+root 17075 1 0 23:57 ? 00:00:00 /usr/sbin/drlb_server --config-file=/etc/drlb/ldm_cluster.cfg
+
+In the example above you can restart only the http_rr_test.cfg
+instance by manually stopping and starting process ID 17058:
+
+# kill  17058
+#  /usr/sbin/drlb_server –config-file=/etc/drlb/http_rr_test.cfg &
+# ps -ef | grep drlb_server | grep -v grep
 
 Setting the listening port:
 --------------------------
