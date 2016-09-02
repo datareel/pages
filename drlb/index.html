@@ -538,8 +538,8 @@ weighted round robin, set the [LBSERVER]  scheme to LB_WEIGHTED. The
 address, and a weight value. 
 <br /><br />
 In the example below, lbnode4 will carry 4 times the amount of
-connection than lbnode3, and lbnode1 and lbnode2. Lbnode3 will carry 3
-time the amount of connections than lbnode1 and lbnode2. Lbnode1 and
+connection than lbnode3, lbnode1 and lbnode2. Lbnode3 will carry 3
+times the amount of connections than lbnode1 and lbnode2. Lbnode1 and
 lbnode2 will get the lease amount of connections. For example:
 <pre>
 [LBSERVER]
@@ -647,7 +647,7 @@ available.
 </table>
 <br />
 <p>
-The assigned load balancing scheme allow you assign TCP connections to
+The assigned load balancing scheme allows you to assign TCP connections to
 specific back end nodes based on the IP address of the incoming
 connection. Incoming connections that do not have assignment rules can
 be configured to use round robin, weighted, or distributed load
@@ -679,7 +679,7 @@ example:
 rules_config_file = /etc/drlb/http_lb_rules.cfg
 <br /><br />
 If the rules file does not exist, a default file will be created for
-you. 
+you when you test your server configuration or start the DRLB server.
 <br /><br />
 Below is a an assigned load balance configuration use round robin as
 the default for 4 back end server nodes:
