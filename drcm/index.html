@@ -422,7 +422,7 @@ ldm, ldm:users, ~/util/ldm_ensure.sh, ldmadmin stop, ~/util/ldm_ensure.sh
 # CSV format: nickname, source, target, resource_script
 data, 192.168.122.1:/data, /data, /etc/drcm/resources/nfs.sh
 archive, 192.168.122.1:/archive, /archive, /etc/drcm/resources/nfs.sh
-webshare, //192.168.122.225/users/web, /home/users/web, /etc/drcm/resources/cifs.sh
+webshare, /192.168.122.225/users/web, /home/users/web, /etc/drcm/resources/cifs.sh
 </pre>
 </p>
 <p class="pull-left"><a href="#">Back to top</a></p>
@@ -497,7 +497,7 @@ ONBOOT=yes
 </pre>
 Save changes and exit VI.
 <br /><br />
-IPADDR and PREFIX or NETMASK will be set by DRCM server when the node
+IPADDR and PREFIX or NETMASK will be set by the DRCM server when the node
 resource is activated.
 <pre>
 # ifup eth0:1
@@ -574,7 +574,7 @@ RHEL 6/CENTOS 6:
 <p>
 The default DRCM resource script location is: /etc/drcm/resources
 <br /><br />
-The default installation include system resource script to manage
+The default installation includes system resource script to manage
 crontabs, floating IP addresses, system services, NFS and CIFS files
 systems. The NFS and CIFS file system resource script will check for
 stale mounts and automatically remount if a mount is stale.  
@@ -590,7 +590,7 @@ resource scripts included in the distribution.
 <table border="0" cellpadding="0" width="100%">
   <tbody>
     <tr>
-      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="Running_Applications">Running Applications</a></b></font></td>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="RunningApplications">Running Applications</a></b></font></td>
     </tr>
   </tbody>
 </table>
@@ -617,11 +617,11 @@ application and the group associated with application.
 <br /><br />
 The start_program is the program used to start the application, with
 or without input arguments. This can be multiple entries separated by
-semicolons 
+semicolons &#59;
 <br /><br />
 The stop_program is the program used to start the application, with
 or without input arguments. This can be multiple entries separated by
-semicolons 
+semicolons &#59;
 <br /><br /> 
 The ensure_script is a script or program that checks to ensure the
 application is running. If an ensure script is provided the DRCM
@@ -758,7 +758,7 @@ $ vi /etc/drcm/my_cluster_conf/testfs_sync_list.sh
 
 RsyncMirror /testfs
 </pre>
-NOTE: Mirroring replicated an exact copy of the /testfs file
+NOTE: Mirroring replicates an exact copy of the /testfs file
 system. This means files will be copied and deleted as new files are
 added or removed. If you want to keep copies of files removed on the
 backup system use the following line 
@@ -891,7 +891,7 @@ message, for example to send SMS messages to a Verizon number:
 </pre>
 By default the DRCM alerts are limited to send messages every 4 hours,
 once an the first message is sent. This is done to avoid a flood email
-and/or test messages during periods of server outages or server
+and/or text messages during periods of server outages or server
 maintenance.  
 <br /><br />
 If your clusters nodes do not have postfix mail configured, you need
@@ -942,14 +942,7 @@ mail as a smart host, search online for: &quot;postfix smarthost setup&quot;
   </tbody>
 </table>
 <!-- End Title Bar -->
-<br />
 <p>
-The first DRCM release was successfully tested on VM and bare metal
-clusters. Implementation will continue on many data systems. All
-source code changes and bug fixes will be release in this open source
-distribution.    
-<br /><br />
-Remaining work to be added to this open source project:
 <ul>
 <li>RPM install for CENTOS/RHEL 6.X and 7.X</li>
 <li>Add TCP cluster protocol for WAN based clusters</li>

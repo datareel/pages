@@ -4,7 +4,7 @@ Last modeified: 08/14/2016
 
 NOTE: The 2-way file replication at the end of this document is not part of heartbeat.
 NOTE: The 2-way file replication transition only applies to clusters using the 
-NOTE: file_system_sync add on for HA clusters.
+NOTE: file_system_sync addon for HA clusters.
 
 On both cluster nodes:
 
