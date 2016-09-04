@@ -1,4 +1,4 @@
-# Datareel Load Balancer 1.54 configuration file
+# Datareel Load Balancer 1.55 configuration file
 #
 
 # Default LB config file
@@ -96,6 +96,12 @@ use_nonblock_sockets = 0
 # Set the time in seconds or microseconds to hold a connection in the throttle queue
 ##throttle_wait_secs = 1
 ##throttle_wait_usecs = 0
+#
+# HTTP IP address forwarding
+##enable_http_forwarding = 0
+##http_request_strings = DELETE,GET,HEAD,PATCH,POST,PUT
+##http_hdr_str = HTTP/
+##http_forward_for_str = X-Forwarded-For
 #
 # Values below can be set here or args when program is launched
 # Debug and verbose modes used mainly for development and testing

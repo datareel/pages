@@ -15,7 +15,7 @@
     <meta name="date.reviewed" scheme="ISO8601" content="2016-08-20" />
     <meta name="language" scheme="DCTERMS.RFC1766" content="EN-US" />
     <meta name="keywords" content="Database, Linux, Applications, load
-				   balancer, cluster manager,
+				   balancer, cluster manager, DRLB, DRCM,
 				   Communications, Sockets, Threads, C++,
 				   Programming, Windows, open source,
 				   multi-threaded, cross-platform,
@@ -112,6 +112,7 @@
 <a href="#SettingOpenFileLimits">Setting Open File Limits</a><br />
 <a href="#LinuxKernelTuning">Linux Kernel Tuning</a><br />
 <a href="#TestingwithApache">Testing with Apache</a><br />
+<a href="#HTTPIPaddressforwarding">HTTP IP address forwarding</a><br />
 <a href="#Remainingworkonthisproject">Remaining work on this project</a><br />
 <a href="#SupportandBugTracking">Support and Bug Tracking</a><br />
 
@@ -1391,6 +1392,36 @@ Search for:
 network.http.max-persistent-connections-per-server
 <br /><br />
 Change the default from 6 to a higher number.
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="HTTPIPaddressforwarding">HTTP IP address forwarding</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
+Each of the setting below are set in the [LBSERVER] global section in
+your DRLB server configuration file. To enable HTTP IP address
+forwarding edit your configuration file and add the following:
+<pre>
+[LBSERVER]
+...
+enable_http_forwarding = 1
+http_request_strings = GET,HEAD,POST
+http_hdr_str = HTTP/
+http_forward_for_str = X-Forwarded-For
+</pre>
+NOTE: To see forwarded IP addresses in your Apache log entries you
+must add the following to your httpd conf:
+<pre>
+LogFormat &quot;%h %l %u %t \&quot;%r\&quot; %>s %b %{X-Forwarded-For}i \&quot;%{Referer}i\&quot; \&quot;%{User-Agent}i\&quot;&quot; combined
+LogFormat &quot;%h %l %u %t \&quot;%r\&quot; %>s %b&quot; %{X-Forwarded-For}i common
+</pre>
 </p>
 <p class="pull-left"><a href="#">Back to top</a></p>
 
