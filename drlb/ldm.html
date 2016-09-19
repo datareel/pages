@@ -193,7 +193,7 @@ assignment rules file is:
 <br /><br />
 /etc/drlb/ldm_cluster_rules.cfg
 <br /><br />
-The assignment rule allow you to route LDM requests to specific
+The assignment rules allow you to route LDM requests to specific
 back-end servers. This is done to isolate clients making excessive
 requests or manage clients with unique requirements. By default if the
 assigned back-end LDM server is down, the client request will be
@@ -220,8 +220,7 @@ To watch LB stats:
 <pre>
 # tail -n 25 -f /var/log/drlb/ldm_cluster_lb_stats.log
 </pre>
-After setting up your configuration and make the LB service
-persistent: 
+To make the LB service persistent: 
 <br /><br />
 RHEL 7/CENTOS 7:
 <pre>
