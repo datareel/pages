@@ -1,4 +1,4 @@
-# Datareel Load Balancer 1.55 configuration file
+# Datareel Load Balancer 1.57 configuration file
 #
 
 # Default LB config file
@@ -7,10 +7,14 @@
 [LBSERVER]
 port = 8080 # All incoming traffic connections here
 #
+# Set to accept clients on single interface
+##listen_ip_addr = 0.0.0.0
+#
 # LB_ASSIGNED scheme requires a rules config file
 # A default rules config file will be build if specified file does not exist
 ##scheme = LB_ASSIGNED
 ##rules_config_file = drlb_server_rules.cfg
+##resolve_assigned_hostnames = 1
 ##assigned_default = LB_RR # Use round robin for node fail over
 ##assigned_default = LB_DISTRIB  # Use distib for node fail over
 ##assigned_default = LB_WEIGHTED # Use weighted for node fail over
