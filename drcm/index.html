@@ -90,6 +90,7 @@
 <a href="#Overview">Overview</a><br />
 <a href="#DocumentedUsage">Documented Usage</a><br />
 <a href="#Prerequisites">Prerequisites</a><br />
+<a href="#RPMInstall">RPM Install</a><br />
 <a href="#BuildingandInstallingFromSourceCode">Building and Installing From Source Code</a><br />
 <a href="#DRCMAuthTokens">DRCM Auth Tokens</a><br />
 <a href="#BuildingCMConfigurationFiles">Building CM Configuration Files</a><br />
@@ -197,6 +198,49 @@ consider the following:
 <li>Applications: Programs not part of the OS with user programs and scripting</li>
 <li>SSH keys: keyed authentication for file synchronization and automation</li>
 </ul>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
+
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="RPM Install">RPM Install</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
+System administrators, follow the instructions below to build an RPM
+for distribution:
+<pre>
+$ cd $HOME; mkdir -pv git; cd $HOME/git
+$ git clone https://github.com/datareel/datareel
+$ cd ${HOME}/git/datareel/cluster_manager/rpm_builder
+</pre>
+RHEL7/CENTOS7:
+<pre>
+$ ./make_rhel7_rpm.sh
+$ sudo su root -c "yum -y install ${HOME}/rpmbuild/RPMS/x86_64/drcm_server-1.37-1.el7.x86_64.x86_64.rpm"
+</pre>
+RHEL6/CENTOS6:
+<pre>
+$ ./make_rhel6_rpm.sh
+$ sudo su root -c "yum -y install ${HOME}/rpmbuild/RPMS/x86_64/drcm_server-1.37-1.el6.x86_64.x86_64.rpm"
+</pre>
+Useful RPM command to verify package contents:
+<br /><br />
+List package: rpm -qf /usr/sbin/drcm_server
+List files: rpm -ql drcm_server
+List configs: rpm -qc drcm_server
+List docs: rpm -qd drcm_server
+<br /><br />
+To remove package:
+<pre>
+$ sudo su root -c 'yum -y remove drcm_server'
+</pre>
 </p>
 <p class="pull-left"><a href="#">Back to top</a></p>
 
@@ -951,8 +995,7 @@ mail as a smart host, search online for: &quot;postfix smarthost setup&quot;
 <!-- End Title Bar -->
 <p>
 <ul>
-<li>RPM install for CENTOS/RHEL 6.X and 7.X</li>
-<li>Add TCP cluster protocol for WAN based clusters</li>
+<li>Long term,, add TCP cluster protocol for WAN based clusters</li>
 </ul>
 </p>
 <p class="pull-left"><a href="#">Back to top</a></p>

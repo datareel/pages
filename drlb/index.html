@@ -91,7 +91,8 @@
 <a href="#Features">Features</a><br />
 <a href="#DocumentedUsage">Documented Usage</a><br />
 <a href="#Building">Building</a><br />
-<a href="#Installing">Installing</a><br />
+<a href="#RPMInstall">RPM Install</a><br />
+<a href="#Installing from src build">Installing</a><br />
 <a href="#Buildingadefaultconfigurationfile">Building a default configuration file</a><br />
 <a href="#TestDRLBconfigurationsfiles">Testing DRLB configurations files</a><br />
 <a href="#RunningDRLBasaservice">Running DRLB as a service</a><br />
@@ -245,11 +246,55 @@ $ ./drlb_server --verbose --debug --config-file=/tmp/lb_test_config.cfg --log-fi
 </p>
 <p class="pull-left"><a href="#">Back to top</a></p>
 
+
 <!-- Begin Title Bar -->
 <table border="0" cellpadding="0" width="100%">
   <tbody>
     <tr>
-      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="Installing">Installing</a></b></font></td>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="RPMInstall">RPM Install</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
+System administrators, follow the instructions below to build an RPM
+for distribution:
+<pre>
+$ cd $HOME; mkdir -pv git; cd $HOME/git
+$ git clone https://github.com/datareel/datareel
+$ cd ${HOME}/git/datareel/load_balancer/rpm_builder
+</pre>
+RHEL7/CENTOS7:
+<pre>
+$ ./make_rhel7_rpm.sh
+$ sudo su root -c "yum -y install ${HOME}/rpmbuild/RPMS/x86_64/drlb_server-1.57-1.el7.x86_64.x86_64.rpm"
+</pre>
+RHEL6/CENTOS6:
+<pre>
+$ ./make_rhel6_rpm.sh
+sudo su root -c "yum -y install ${HOME}/rpmbuild/RPMS/x86_64/drlb_server-1.57-1.el6.x86_64.x86_64.rpm"
+</pre>
+Useful RPM command to verify package contents:
+<br /><br />
+List package: rpm -qf /usr/sbin/drlb_server
+List files: rpm -ql drlb_server
+List configs: rpm -qc drlb_server
+List docs: rpm -qd drlb_server
+<br /><br />
+To remove package:
+<pre>
+$ sudo su root -c "yum -y remove drlb_server"
+</pre>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="Installing">Installing
+      from src build</a></b></font></td>
     </tr>
   </tbody>
 </table>
@@ -1461,9 +1506,7 @@ LogFormat &quot;%h %l %u %t \&quot;%r\&quot; %>s %b&quot; %{X-Forwarded-For}i co
 <!-- End Title Bar -->
 <br />
 <p>
-<ul>
-<li>RPM install for CENTOS/RHEL 6.X and 7.X</li>
-</ul>
+&nbsp;<br />
 </p>
 <p class="pull-left"><a href="#">Back to top</a></p>
 
