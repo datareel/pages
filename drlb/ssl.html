@@ -96,8 +96,8 @@
 <a href="#Building">Building and installing from source</a><br />
 <a href="#SettinguptheSSLbridgeservice">Setting up the SSL bridge service</a><br />
 <a href="#SSLcertificates">SSL certificates</a><br />
-<a href="#SSLencryptionprotocol">SSL encryption protocol</a><br />
 <a href="#SelfsignedSSLcertificates">Self-signed SSL certificates</a><br />
+<a href="#SSLencryptionprotocol">SSL encryption protocol</a><br />
 <a href="#Remainingworkonthisproject">Remaining work on this project</a><br />
 <a href="#SupportandBugTracking">Support and Bug Tracking</a><br />
 
@@ -113,18 +113,18 @@
 <br />
 <p>
 The DRLB SSL bridge is used to decrypt incoming SSL traffic on TCP
-port 443 and send encrypted or unencrypted traffic to backend web
+port 443 and send encrypted or unencrypted traffic to back-end web
 servers. 
 <br /><br />
 Load balancing SSL connections cannot forward IP address information
 HTTP headers unless the SSL traffic is decrypted and re-encrypted with
 the connection information inserted into the HTTP headers. The DRLB
-SSL bridge has options to load balance front end connections as an
-HTTPS server and distribute web traffic to backend HTTP or HTTPS
+SSL bridge has options to load balance front-end connections as an
+HTTPS server and distribute web traffic to back-end HTTP or HTTPS
 servers.
 <br /><br />
 Decrypting front-end SSL traffic and re-encrypting allows you to
-forward IP address information to backend HTTPS servers. Both the
+forward IP address information to back-end HTTPS servers. Both the
 front-end and back-end web traffing remains encrypted during
 transport.     
 <br /><br />
@@ -161,14 +161,12 @@ $ cd ${HOME}/git/datareel/load_balancer/rpm_builder
 RHEL7/CENTOS7:
 <pre>
 $ ./make_ssl_rpm_package.sh rhel7
-$ sudo su root -c "yum -y install
-${HOME}/rpmbuild/RPMS/x86_64/drlb_ssl_server-1.57-1.el7.x86_64.x86_64.rpm"
+$ sudo su root -c "yum -y install ${HOME}/rpmbuild/RPMS/x86_64/drlb_ssl_server-1.57-1.el7.x86_64.x86_64.rpm"
 </pre>
 RHEL6/CENTOS6:
 <pre>
 $ ./make_ssl_rpm_package.sh rhel6
-$ sudo su root -c "yum -y install
-${HOME}/rpmbuild/RPMS/x86_64/drlb_ssl_server-1.57-1.el6.x86_64.x86_64.rpm"
+$ sudo su root -c "yum -y install ${HOME}/rpmbuild/RPMS/x86_64/drlb_ssl_server-1.57-1.el6.x86_64.x86_64.rpm"
 </pre>
 Useful RPM command to verify package contents:
 <br /><br />
@@ -371,7 +369,6 @@ ssl_cert_file =  /etc/drlb/ssl/certs/ca.crt
 <!-- End Title Bar -->
 <br />
 <p>
------------------------
 The SSL encryption protocol is set by the ssl_protocol setting in the
 SSLCONFIG section in the LB configuration file: 
 <pre>
@@ -382,10 +379,10 @@ ssl_protocol = SSLv23
 The SSLv23 default setting uses SSL protocols SSLv2, SSLv3, TLSv1,
 TLSv1.1 and TLSv1.2. Other protocol options are: 
 <br /><br />
-SSLv2 - SSL version 2 
-SSLv3 - SSL version 3  
-TLSv1 - TLS version 1 
-TLSv1_1 - TLS version 1.1
+SSLv2 - SSL version 2<br />
+SSLv3 - SSL version 3<br />
+TLSv1 - TLS version 1<br />
+TLSv1_1 - TLS version 1.1<br />
 TLSv1_2 - TLS version 1.2
 </p>
 <p class="pull-left"><a href="#">Back to top</a></p>
