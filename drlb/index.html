@@ -259,8 +259,20 @@ $ ./drlb_server --verbose --debug --config-file=/tmp/lb_test_config.cfg --log-fi
 <!-- End Title Bar -->
 <br />
 <p>
-System administrators, follow the instructions below to build an RPM
-for distribution:
+Latest pre-built RPMs are available for download:
+<br/><br />
+RHEL7/CENTOS7:<br />
+<a href="https://github.com/datareel/datareel/releases/download/5.03/drlb_server-1.58-1.el7.x86_64.x86_64.rpm">
+https://github.com/datareel/datareel/releases/download/5.03/drlb_server-1.58-1.el7.x86_64.x86_64.rpm
+</a>
+<br/><br />
+RHEL6/CENTOS6:<br />
+<a href="https://github.com/datareel/datareel/releases/download/5.03/drlb_server-1.58-1.el6.x86_64.x86_64.rpm">
+https://github.com/datareel/datareel/releases/download/5.03/drlb_server-1.58-1.el6.x86_64.x86_64.rpm
+</a>
+<br/><br />
+Follow the instructions below to build an RPM for distribution from
+the latest source code:
 <pre>
 $ cd $HOME; mkdir -pv git; cd $HOME/git
 $ git clone https://github.com/datareel/datareel
@@ -269,12 +281,12 @@ $ cd ${HOME}/git/datareel/load_balancer/rpm_builder
 RHEL7/CENTOS7:
 <pre>
 $ ./make_rhel7_rpm.sh
-$ sudo su root -c "yum -y install ${HOME}/rpmbuild/RPMS/x86_64/drlb_server-1.57-1.el7.x86_64.x86_64.rpm"
+$ sudo su root -c "yum -y install ${HOME}/rpmbuild/RPMS/x86_64/drlb_server-1.58-1.el7.x86_64.x86_64.rpm"
 </pre>
 RHEL6/CENTOS6:
 <pre>
 $ ./make_rhel6_rpm.sh
-sudo su root -c "yum -y install ${HOME}/rpmbuild/RPMS/x86_64/drlb_server-1.57-1.el6.x86_64.x86_64.rpm"
+sudo su root -c "yum -y install ${HOME}/rpmbuild/RPMS/x86_64/drlb_server-1.58-1.el6.x86_64.x86_64.rpm"
 </pre>
 Useful RPM command to verify package contents:
 <br /><br />
@@ -302,7 +314,7 @@ $ sudo su root -c "yum -y remove drlb_server"
 <!-- End Title Bar -->
 <br />
 <p>
-The development version can be installed on CENTOS6/RHEL6 or
+The latest source code version can be installed on CENTOS6/RHEL6 or
 CENTOS7/RHEL7 from the makefile:
 <pre>
 $ cd $HOME/git/datareel/load_balancer/drlb_server

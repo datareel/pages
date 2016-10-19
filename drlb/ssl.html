@@ -151,8 +151,19 @@ Government, and academic institutions.
 <!-- End Title Bar -->
 <br />
 <p>
-System administrators, follow the instructions below to build an RPM
-for distribution:
+Latest pre-built RPMs are available for download:
+<br/><br />
+RHEL7/CENTOS7:<br />
+<a href="https://github.com/datareel/datareel/releases/download/5.03/drlb_ssl_server-1.58-1.el7.x86_64.x86_64.rpm">
+https://github.com/datareel/datareel/releases/download/5.03/drlb_ssl_server-1.58-1.el7.x86_64.x86_64.rpm
+</a>
+<br/><br />
+RHEL6/CENTOS6:<br />
+<a href="https://github.com/datareel/datareel/releases/download/5.03/drlb_ssl_server-1.58-1.el6.x86_64.x86_64.rpm">
+https://github.com/datareel/datareel/releases/download/5.03/drlb_ssl_server-1.58-1.el6.x86_64.x86_64.rpm
+</a>
+<br/><br />
+Follow the instructions below to build an RPM from latest source for distribution:
 <pre>
 $ cd $HOME; mkdir -pv git; cd $HOME/git
 $ git clone https://github.com/datareel/datareel
@@ -195,7 +206,7 @@ $ sudo su root -c "yum -y remove drlb_ssl_server"
 <br />
 <p>
 Follow the instructions below to build and install the DRLB SSL bridge
-from source code: 
+from latest source code: 
 <pre>
 $ cd $HOME
 $ mkdir -pv git
@@ -245,8 +256,7 @@ back-end SSL certificates. The ssl_backend_hostname setting must match
 the CN name of the issuer’s certificate. You must also provide a
 trusted CA list using the ssl_backend_ca_list_file setting. 
 <br /><br />
-For all other DRLB setting please refer to the README file supplied
-with the DRLB server:
+For all other DRLB setting please refer to the DRLB README file:
 <br /><br />
 # more /usr/share/doc/drlb/README.txt 
 <br /><br />

@@ -213,8 +213,21 @@ consider the following:
 <!-- End Title Bar -->
 <br />
 <p>
-System administrators, follow the instructions below to build an RPM
-for distribution:
+Latest pre-built RPMs are available for download:
+<br/><br />
+RHEL7/CENTOS7:<br />
+<a href="https://github.com/datareel/datareel/releases/download/5.03/drcm_server-1.37-1.el7.x86_64.x86_64.rpm">
+https://github.com/datareel/datareel/releases/download/5.03/drcm_server-1.37-1.el7.x86_64.x86_64.rpm
+</a>
+<br/><br />
+RHEL6/CENTOS6:<br />
+<a href="https://github.com/datareel/datareel/releases/download/5.03/drcm_server-1.37-1.el6.x86_64.x86_64.rpm">
+https://github.com/datareel/datareel/releases/download/5.03/drcm_server-1.37-1.el6.x86_64.x86_64.rpm
+</a>
+<br/><br />
+
+Follow the instructions below to build an RPM for distribution from
+the latest source code:
 <pre>
 $ cd $HOME; mkdir -pv git; cd $HOME/git
 $ git clone https://github.com/datareel/datareel
@@ -256,7 +269,7 @@ $ sudo su root -c 'yum -y remove drcm_server'
 <br />
 <p>
 Developers and system admins, follow the instructions below to build
-and install the DRCM server from the source code distro:
+and install the DRCM server from the latest source code distro:
 
 <pre>
 $ ssh username@cmnode1
