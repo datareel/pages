@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="DataReel Software Development">
+    <meta name="author" content="DataReel Software Development">
+    <meta name="title" content="DataReel OpenSource" />
+    <meta name="creator" content="DataReel Software Development" />
+    <meta name="publisher" content="DataReel Software Development" />
+    <meta name="contributor" content="DataReel Software Development" />
+    <meta name="date.created" scheme="ISO8601" content="2016-08-20" />
+    <meta name="date.reviewed" scheme="ISO8601" content="2016-08-20" />
+    <meta name="language" scheme="DCTERMS.RFC1766" content="EN-US" />
+    <meta name="keywords" content="Database, Linux, Applications, load
+				   balancer, cluster manager, DRLB,
+				   DRCM, SSL, SSL bridge, TLS,
+				   Communications, Sockets, Threads, C++,
+				   Programming, Windows, open source,
+				   multi-threaded, cross-platform,
+				   commercial, individual, academic, 
+				   modular" />
+    <meta name="rights" content="http://datareel.com" />
+    <meta name="rating" content="General" />
+    <meta name="Distribution" content="Global" />
+    <meta name="Revisit-after" content="1 week">
+    <meta name="robots" content="index,follow" />
+    <link rel="icon" href="../images/favicon.ico">
+    <title>DRLB SSL Bridge</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="../css/starter-template.css" rel="stylesheet">
+    <script src="../js/ie-emulation-modes-warning.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements
+    and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed"
+          data-toggle="collapse" data-target="#navbar"
+          aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://datareel.com/">DataReel Open Source</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../clib/index.html">C/C++ Library</a></li>
+            <li><a href="../drcm/index.html">Cluster Manager</a></li>
+            <li><a href="index.html">Load Balancer</a></li>
+            <li class="active"><a href="ssl.html">DRLB SSL Bridge</a></li>
+            <li><a href="ldm.html">DRLB LDM service</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div>
+<!-- My Content Starts Below -->
+
+<!-- Start company logo -->
+<center><img src="../images/drlogo1.jpg" /></center>
+<!-- End company logo --><!-- Start Menu -->
+<hr color="#000000" noshade="noshade" size="1" /><!-- Begin Title Bar --
+				-- -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;Contents</b></font></td>
+      </tr>
+    </tbody>
+</table>
+<br />
+<!-- End Title Bar -->
+
+<p>
+
+
+<a href="#Overview">Overview</a><br />
+<a href="#RPMInstall">RPM Install</a><br />
+<a href="#Building">Building and installing from source</a><br />
+<a href="#SettinguptheSSLbridgeservice">Setting up the SSL bridge service</a><br />
+<a href="#SSLcertificates">SSL certificates</a><br />
+<a href="#SSLencryptionprotocol">SSL encryption protocol</a><br />
+<a href="#SelfsignedSSLcertificates">Self-signed SSL certificates</a><br />
+<a href="#Remainingworkonthisproject">Remaining work on this project</a><br />
+<a href="#SupportandBugTracking">Support and Bug Tracking</a><br />
+
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="Overview">Overview</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
+The DRLB SSL bridge is used to decrypt incoming SSL traffic on TCP
+port 443 and send encrypted or unencrypted traffic to backend web
+servers. 
+<br /><br />
+Load balancing SSL connections cannot forward IP address information
+HTTP headers unless the SSL traffic is decrypted and re-encrypted with
+the connection information inserted into the HTTP headers. The DRLB
+SSL bridge has options to load balance front end connections as an
+HTTPS server and distribute web traffic to backend HTTP or HTTPS
+servers.
+<br /><br />
+Decrypting front-end SSL traffic and re-encrypting allows you to
+forward IP address information to backend HTTPS servers. Both the
+front-end and back-end web traffing remains encrypted during
+transport.     
+<br /><br />
+Sending decrypted SSL to back-end web servers over TCP port 80 allows
+you to use existing back-end HTTP web services. The load balanced
+front-end remains encrypted. The back-end web services can utilize
+existing web configurations with having to be reconfigured to run
+SSL.  
+<br /><br />
+DRLB source code is distributed as an open source project under
+the GNU general public license and can used by freely by commercial,
+Government, and academic institutions.
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="RPMInstall">RPM Install</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
+System administrators, follow the instructions below to build an RPM
+for distribution:
+<pre>
+$ cd $HOME; mkdir -pv git; cd $HOME/git
+$ git clone https://github.com/datareel/datareel
+$ cd ${HOME}/git/datareel/load_balancer/rpm_builder
+</pre>
+RHEL7/CENTOS7:
+<pre>
+$ ./make_ssl_rpm_package.sh rhel7
+$ sudo su root -c "yum -y install
+${HOME}/rpmbuild/RPMS/x86_64/drlb_ssl_server-1.57-1.el7.x86_64.x86_64.rpm"
+</pre>
+RHEL6/CENTOS6:
+<pre>
+$ ./make_ssl_rpm_package.sh rhel6
+$ sudo su root -c "yum -y install
+${HOME}/rpmbuild/RPMS/x86_64/drlb_ssl_server-1.57-1.el6.x86_64.x86_64.rpm"
+</pre>
+Useful RPM command to verify package contents:
+<br /><br />
+List package: rpm -qf /usr/sbin/drlb_ssl_server<br />
+List files: rpm -ql drlb_ssl_server<br />
+List configs: rpm -qc drlb_ssl_server<br />
+List docs: rpm -qd drlb_ssl_server
+<br /><br />
+To remove package:
+<pre>
+$ sudo su root -c "yum -y remove drlb_ssl_server"
+</pre>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="Building">Building
+      and installing from source</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
+Follow the instructions below to build and install the DRLB SSL bridge
+from source code: 
+<pre>
+$ cd $HOME
+$ mkdir -pv git
+$ cd $HOME/git
+$ git clone https://github.com/datareel/datareel
+$ source $HOME/git/datareel/env/gnu_env.sh
+$ cd $HOME/git/datareel/load_balancer/ssl_bridge
+$ make
+$ sudo su root -c 'make install_root'
+</pre>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="SettinguptheSSLbridgeservice">Setting up the SSL bridge service</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
+The default LB configuration file for the SSL bridge is:
+<br /><br />
+/etc/drlb/ssl_bridge.cfg
+<br /><br />
+In the LB configuration file, refer to the following section for all
+settings specific to the SSL config: 
+<pre>
+[SSLCONFIG]
+# Default SSL proto is set to SSLv2, SSLv3, TLSv1, TLSv1.1 and TLSv1.2
+ssl_protocol = SSLv23  
+ssl_key_file = /etc/drlb/ssl/private/ca.key
+ssl_cert_file =  /etc/drlb/ssl/certs/ca.crt
+#ssl_use_dhparms = 0
+#ssl_dhparms_file =  /etc/drlb/ssl/certs/dhparams.pem
+#ssl_encrypt_backend = 0
+#ssl_backend_hostname = www.example.com
+#ssl_verify_backend_cert = 0
+#ssl_backend_ca_list_file = /etc/pki/tls/certs/ca-bundle.crt
+</pre>
+By default back-end traffic is set to unencrypted, HTTP. If you
+encrypt back-end traffic for HTTPS you have the option to verify the
+back-end SSL certificates. The ssl_backend_hostname setting must match
+the CN name of the issuer’s certificate. You must also provide a
+trusted CA list using the ssl_backend_ca_list_file setting. 
+<br /><br />
+For all other DRLB setting please refer to the README file supplied
+with the DRLB server:
+<br /><br />
+# more /usr/share/doc/drlb/README.txt 
+<br /><br />
+or online: 
+<br /><br />
+<a href="http://datareel.com/drlb/">http://datareel.com/drlb</a>
+<br /><br />
+The default LB scheme used with the SSL bridge is round robin.
+<br /><br />
+After setting up your LB and SSL config, start the
+service:
+<br /><br />
+RHEL 7/CENTOS 7:
+<pre>
+# systemctl start drlb_ssl_server
+# systemctl status drlb_ssl_server
+</pre>
+RHEL 6/CENTOS 6:
+<pre>
+# service drlb_ssl_server start
+# service drlb_ssl_server status
+</pre>
+To watch the log file:
+<pre>
+# tail -f /var/log/drlb/ssl_bridge.log
+</pre>
+To watch LB stats:
+<pre>
+# tail -n 25 -f /var/log/drlb/ssl_bridge_stats.log
+</pre>
+To make the LB service persistent: 
+<br /><br />
+RHEL 7/CENTOS 7:
+<pre>
+# systemctl enable drlb_ssl_server
+</pre>
+RHEL 6/CENTOS 6:
+<pre>
+# chkconfig drlb_ssl_server on
+</pre>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="SSLcertificates">SSL certificates</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
+Before starting the SSL bridge you must install or set the location to
+your private key and certificate file:
+<br /><br />
+# vi /etc/drlb/ssl_bridge.cfg
+<pre>
+[SSLCONFIG]
+...
+ssl_key_file = /etc/drlb/ssl/private/ca.key
+ssl_cert_file =  /etc/drlb/ssl/certs/ca.crt
+</pre>
+If you do not have an SSL certificate issued and verified by a trusted
+Certificate Authority you can use a self-signed certificate for
+non-production or internal HTTPS services. 
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="SelfsignedSSLcertificates">Self-signed SSL certificates</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
+Follow the instructions below to create a self-signed certificate for
+non-production or internal HTTPS services:
+<pre>
+# mkdir -pv /etc/drlb/ssl/private /etc/drlb/ssl/certs
+# openssl dhparam -out /etc/drlb/ssl/certs/dhparams.pem 2048
+# openssl genrsa -out /etc/drlb/ssl/private/ca.key  2048
+# chmod 600 /etc/drlb/ssl/private/ca.key
+
+# openssl req -new -key /etc/drlb/ssl/private/ca.key -out /etc/drlb/ssl/certs/ca.csr
+
+Country Name (2 letter code) [XX]:
+State or Province Name (full name) []:
+Locality Name (eg, city) [Default City]:
+Organization Name (eg, company) [Default Company Ltd]:
+Organizational Unit Name (eg, section) []:
+Common Name (eg, your name or your server's hostname) []:
+Email Address []: 
+
+# openssl x509 -req -days 365 -in /etc/drlb/ssl/certs/ca.csr -signkey /etc/drlb/ssl/private/ca.key -out /etc/drlb/ssl/certs/ca.crt
+
+# vi /etc/drlb/ssl_bridge.cfg
+
+[SSLCONFIG]
+...
+ssl_key_file = /etc/drlb/ssl/private/ca.key
+ssl_cert_file =  /etc/drlb/ssl/certs/ca.crt
+</pre>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="SSLencryptionprotocol">SSL encryption protocol</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
+-----------------------
+The SSL encryption protocol is set by the ssl_protocol setting in the
+SSLCONFIG section in the LB configuration file: 
+<pre>
+[SSLCONFIG]
+...
+ssl_protocol = SSLv23
+</pre>
+The SSLv23 default setting uses SSL protocols SSLv2, SSLv3, TLSv1,
+TLSv1.1 and TLSv1.2. Other protocol options are: 
+<br /><br />
+SSLv2 - SSL version 2 
+SSLv3 - SSL version 3  
+TLSv1 - TLS version 1 
+TLSv1_1 - TLS version 1.1
+TLSv1_2 - TLS version 1.2
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="Remainingworkonthisproject">Remaining work on this project</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
+&nbsp;<br />
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="SupportandBugTracking">Support and Bug Tracking</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
+<a href="https://github.com/datareel/datareel/issues">https://github.com/datareel/datareel/issues</a>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
+<br />
+<hr color="#000000" noshade="noshade" size="1" /><!-- Start Copyright Information -->
+<p><font color="000000">Copyright &copy; 2001-2016&nbsp;DataReel OpenSource</font></p>
+
+	
+<!-- My Content Ends Above -->
+      </div>
+    </div><!-- /.container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster
+    -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery ||
+    document.write('<script src="../js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new
+      Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-83583599-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+  </body>
+</html>
