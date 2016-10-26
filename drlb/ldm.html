@@ -149,16 +149,16 @@ Government, and academic institutions.
 Latest pre-built RPMs are available for download:
 <br/><br />
 RHEL7/CENTOS7:<br />
-<a href="https://github.com/datareel/datareel/releases/download/5.03/drlb_ldm_server-1.61-1.el7.x86_64.x86_64.rpm">
-https://github.com/datareel/datareel/releases/download/5.03/drlb_ldm_server-1.61-1.el7.x86_64.x86_64.rpm
+<a href="https://github.com/datareel/datareel/releases/download/5.03/drlb_ldm_server-1.62-1.el7.x86_64.x86_64.rpm">
+https://github.com/datareel/datareel/releases/download/5.03/drlb_ldm_server-1.62-1.el7.x86_64.x86_64.rpm
 </a><br />
-sha256sum: da83d96decd9f7fb87a7c76d0a56d71e9e713b2054c957914139c0e079e0215a
+sha256sum: 24618567d351e4017a9e65c3ed5d76ab8ae7ede054314d2ba5c57959818acb4c
 <br/><br />
 RHEL6/CENTOS6:<br />
-<a href="https://github.com/datareel/datareel/releases/download/5.03/drlb_ldm_server-1.61-1.el6.x86_64.x86_64.rpm">
-https://github.com/datareel/datareel/releases/download/5.03/drlb_ldm_server-1.61-1.el6.x86_64.x86_64.rpm
+<a href="https://github.com/datareel/datareel/releases/download/5.03/drlb_ldm_server-1.62-1.el6.x86_64.x86_64.rpm">
+https://github.com/datareel/datareel/releases/download/5.03/drlb_ldm_server-1.62-1.el6.x86_64.x86_64.rpm
 </a><br />
-sha256sum: d8fda6152122f64135fa908e49b0be6de9a7269f0d69fc1b9e0c93b0c8c98980
+sha256sum: 95ee13f9174340f7bb07a3a942a04e9bb715d457a13d2d70c3153eec03f7f944
 <br/><br />
 Follow the instructions below to build an RPM from latest source code for distribution:
 <pre>
@@ -169,12 +169,12 @@ $ cd ${HOME}/git/datareel/load_balancer/rpm_builder
 RHEL7/CENTOS7:
 <pre>
 $ ./make_ldm_rpm_package.sh rhel7
-$ sudo su root -c "yum -y install ${HOME}/rpmbuild/RPMS/x86_64/drlb_ldm_server-1.61-1.el7.x86_64.x86_64.rpm"
+$ sudo su root -c "yum -y install ${HOME}/rpmbuild/RPMS/x86_64/drlb_ldm_server-1.62-1.el7.x86_64.x86_64.rpm"
 </pre>
 RHEL6/CENTOS6:
 <pre>
 $ ./make_ldm_rpm_package.sh rhel6
-$ sudo su root -c "yum -y install ${HOME}/rpmbuild/RPMS/x86_64/drlb_ldm_server-1.61-1.el6.x86_64.x86_64.rpm"
+$ sudo su root -c "yum -y install ${HOME}/rpmbuild/RPMS/x86_64/drlb_ldm_server-1.62-1.el6.x86_64.x86_64.rpm"
 </pre>
 Useful RPM command to verify package contents:
 <br /><br />
