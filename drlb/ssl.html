@@ -154,22 +154,22 @@ Government, and academic institutions.
 Latest pre-built RPMs are available for download:
 <br/><br />
 RHEL7/CENTOS7:<br />
-<a href="https://github.com/datareel/datareel/releases/download/5.03/drlb_ssl_server-1.58-1.el7.x86_64.x86_64.rpm">
-https://github.com/datareel/datareel/releases/download/5.03/drlb_ssl_server-1.58-1.el7.x86_64.x86_64.rpm
+<a href="https://github.com/datareel/ssl-bridge/releases/download/1.58/drlb_ssl_server-1.58-1.el7.x86_64.x86_64.rpm">
+https://github.com/datareel/ssl-bridge/releases/download/1.58/drlb_ssl_server-1.58-1.el7.x86_64.x86_64.rpm
 </a><br >
 sha256sum: 506fb9588bdf677ab42a3b070101d50bc7244cdde807dcf81f6e64a3e84439ff
 <br/><br />
 RHEL6/CENTOS6:<br />
-<a href="https://github.com/datareel/datareel/releases/download/5.03/drlb_ssl_server-1.58-1.el6.x86_64.x86_64.rpm">
-https://github.com/datareel/datareel/releases/download/5.03/drlb_ssl_server-1.58-1.el6.x86_64.x86_64.rpm
+<a href="https://github.com/datareel/ssl-bridge/releases/download/1.58/drlb_ssl_server-1.58-1.el6.x86_64.x86_64.rpm">
+https://github.com/datareel/ssl-bridge/releases/download/1.58/drlb_ssl_server-1.58-1.el6.x86_64.x86_64.rpm
 </a><br />
 sha256sum: ae3ee28f20cb5bde34a226ba2075cceee4fbd02cc0b5e8717420723d9ac4f145
 <br/><br />
 Follow the instructions below to build an RPM from latest source for distribution:
 <pre>
 $ cd $HOME; mkdir -pv git; cd $HOME/git
-$ git clone https://github.com/datareel/datareel
-$ cd ${HOME}/git/datareel/load_balancer/rpm_builder
+$ git clone https://github.com/datareel/ssl-bridge
+$ cd ${HOME}/git/ssl-bridge/rpm_builder
 </pre>
 RHEL7/CENTOS7:
 <pre>
@@ -213,9 +213,9 @@ from latest source code:
 $ cd $HOME
 $ mkdir -pv git
 $ cd $HOME/git
-$ git clone https://github.com/datareel/datareel
-$ source $HOME/git/datareel/env/gnu_env.sh
-$ cd $HOME/git/datareel/load_balancer/ssl_bridge
+$ git clone https://github.com/datareel/ssl-bridge
+$ source $HOME/git/ssl-bridge/env/gnu_env.sh
+$ cd $HOME/git/ssl-bridge/ssl_bridge
 $ make
 $ sudo su root -c 'make install_root'
 </pre>
@@ -425,7 +425,7 @@ TLSv1_2 - TLS version 1.2
 <!-- End Title Bar -->
 <br />
 <p>
-<a href="https://github.com/datareel/datareel/issues">https://github.com/datareel/datareel/issues</a>
+<a href="https://github.com/datareel/ssl-bridge/issues">https://github.com/datareel/ssl-bridge/issues</a>
 </p>
 <p class="pull-left"><a href="#">Back to top</a></p>
 
