@@ -216,24 +216,23 @@ consider the following:
 Latest pre-built RPMs are available for download:
 <br/><br />
 RHEL7/CENTOS7:<br />
-<a href="https://github.com/datareel/datareel/releases/download/5.03/drcm_server-1.37-1.el7.x86_64.x86_64.rpm">
-https://github.com/datareel/datareel/releases/download/5.03/drcm_server-1.37-1.el7.x86_64.x86_64.rpm
+<a href="https://github.com/datareel/ha-cluster-manager/releases/download/1.37/drcm_server-1.37-1.el7.x86_64.x86_64.rpm">
+https://github.com/datareel/ha-cluster-manager/releases/download/1.37/drcm_server-1.37-1.el7.x86_64.x86_64.rpm
 </a><br>
 sha256sum: 8bc4f7230937806cd799577840d7f10fdef0d594b94061bc273360376ec5a4bf
 <br/><br />
 RHEL6/CENTOS6:<br />
-<a href="https://github.com/datareel/datareel/releases/download/5.03/drcm_server-1.37-1.el6.x86_64.x86_64.rpm">
-https://github.com/datareel/datareel/releases/download/5.03/drcm_server-1.37-1.el6.x86_64.x86_64.rpm
+<a href="https://github.com/datareel/ha-cluster-manager/releases/download/1.37/drcm_server-1.37-1.el6.x86_64.x86_64.rpm">
+https://github.com/datareel/ha-cluster-manager/releases/download/1.37/drcm_server-1.37-1.el6.x86_64.x86_64.rpm
 </a><br />
 sha256sum: b67a2ed72bf69279bd7cd71c64d85dffeb5d9a95164381ca98385d166885ef6a
-<br/><br />
-
+<br /><br />
 Follow the instructions below to build an RPM for distribution from
 the latest source code:
 <pre>
 $ cd $HOME; mkdir -pv git; cd $HOME/git
-$ git clone https://github.com/datareel/datareel
-$ cd ${HOME}/git/datareel/cluster_manager/rpm_builder
+$ git clone https://github.com/datareel/ha-cluster-manager
+$ cd ${HOME}/git/ha-cluster-manager/rpm_builder
 </pre>
 RHEL7/CENTOS7:
 <pre>
@@ -277,10 +276,10 @@ and install the DRCM server from the latest source code distro:
 $ ssh username@cmnode1
 $ mkdir -pv ~/git
 $ cd ~/git
-$ git clone https://github.com/datareel/datareel.git
-$ cd ~/git/datareel/env
+$ git clone https://github.com/datareel/ha-cluster-manager
+$ cd ~/git/ha-cluster-manager/env
 $ source gnu_env.sh
-$ cd ~/git/datareel/cluster_manager/drcm_server
+$ cd ~/git/ha-cluster-manager/drcm_server
 $ make
 $ sudo su root -c &#39;make install_root&#39;
 </pre>
@@ -1026,7 +1025,7 @@ mail as a smart host, search online for: &quot;postfix smarthost setup&quot;
 <!-- End Title Bar -->
 <br />
 <p>
-<a href="https://github.com/datareel/datareel/issues">https://github.com/datareel/datareel/issues</a>
+<a href="https://github.com/datareel/ha-cluster-manager/issues">https://github.com/datareel/ha-cluster-manager/issues</a>
 </p>
 <p class="pull-left"><a href="#">Back to top</a></p>
 <br />
