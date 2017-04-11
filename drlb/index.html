@@ -1370,13 +1370,13 @@ CENTOS 5/6 or RHEL 5/6:<br />
 # vi /etc/sysctl.conf
 <br /><br />
 CENTOS 7 or RHEL 7:<br />
-# vi /usr/lib/sysctl.d/00-system.conf
+# vi /etc/sysctl.d/01-lb.conf
 <br /><br />
 To load changes CENTOS 5/6 or RHEL 5/6:<br />
 # sysctl -p
 <br /><br />
 To load changes CENTOS 7 or RHEL 7:<br />     
-# sysctl -p  /usr/lib/sysctl.d/00-system.conf
+# sysctl -p /etc/sysctl.d/01-lb.conf
 <pre>
 File Handle Limits:
 ------------------
