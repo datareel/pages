@@ -662,10 +662,10 @@ or server running the DRSM package. To monitor postfix:
 <pre>
 $ su - root
 # tail -f /var/log/maillog
-</per>
+</pre>
 If your data center has a relay host, you can use the relay host by
 modifying the postfix configuration:
-</pre>
+<pre>
 # vi /etc/postfix/main.cf
 
 relayhost = 192.168.1.12
