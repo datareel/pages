@@ -75,30 +75,50 @@
       <div>
 <!-- My Content Starts Below -->
 
+<center><img src="../images/drlogo1.jpg" /></center>
+<!-- End company logo --><!-- Start Menu -->
+<hr color="#000000" noshade="noshade" size="1" /><!-- Begin Title Bar --
+				-- -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;Contents</b></font></td>
+      </tr>
+    </tbody>
+</table>
+<br />
+<!-- End Title Bar -->
 
-<pre>
-DataReel System Admin Monitor README file
-Last Modified: 05/10/2017
+<p>
+<a href="#Overview">Overview</a><br />
+<a href="#DocumentedUsage">Documented Usage</a><br />
+<a href="#Requirements">Requirements</a><br />
+<a href="#Settingupthesystemadminuser">Setting up the system admin user</a><br />
+<a href="#Installing">Installing</a><br />
+<a href="#SettingupaDRSMdevelopmentworkstation">Setting up a DRSM development workstation</a><br />
+<a href="#Addingsystemstomonitor">Adding systems to monitor</a><br />
+<a href="#WebInterfaceSetup">Web Interface Setup</a><br />
+<a href="#CustomizingtheWebInterface">Customizing the Web Interface</a><br />
+<a href="#Settingcustomalertthresholds">Setting custom alert thresholds</a><br />
+<a href="#EmailTextmessagingsetup">Email Text messaging setup</a><br />
+<a href="#MonitoringCrons">Monitoring Crons</a><br />
+<a href="#MySQLUtilities">MySQL Utilities</a><br />
+<a href="#PostgresUtilities">Postgres Utilities</a><br />
+<a href="#RemainingWork">Remaining Work on This Project</a><br />
+<a href="#Support">Support and Bug Tracking</a><br />
+</p>
 
-Contents:
---------
-* Overview
-* Requirements
-* Setting up the system admin user
-* Installing
-* Setting up a DRSM development workstation
-* Adding systems to monitor
-* Web Interface Setup
-* Customizing the Web Interface
-* Setting custom alert thresholds
-* Email Text messaging setup
-* Monitoring Crons
-* MySQL Utilities
-* Postgres Utilities
-* Support
-
-Overview:
---------
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="Overview">Overview</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
 DRSM is an admin tool used to monitor connectivity and the system
 health of servers and workstations. The monitoring code is written in
 BASH and the Web interface is written in PHP. System connectivity
@@ -107,20 +127,68 @@ HTTPS, and FTP as required. System health check reporting connects to
 systems via keyed SSH sessions and monitors CPU, memory, disk, load,
 and user statistics. Email and text message alerts can be sent based
 on per-defined or user-defined thresholds.
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
-Requirements:
-------------
-* Linux system with network access to systems being monitored
-* Apache with PHP if using Web interface 
-* User account to run DRSM software
-* Keyed SSH access if using health checking
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="DocumentedUsage">Documented Usage</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
+<ul>
+<li> All commands prefixed with the $ prompt indicate the command is
+  executed from a user account or from a service account. </li>
 
-Setting up the system admin user:
--------------------------------
+<li> All commands prefixed with the # prompt indicate the command is
+  executed as root. </li>
+
+<li> In a configuration file example a ... symbol indicates omitted content
+  for brevity.</li>   
+</ul>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="Requirements">Requirements</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
+<ul>
+<li>Linux system with network access to systems being monitored</li>
+<li>Apache with PHP if using Web interface</li>
+<li>User account to run DRSM software</li>
+<li>Keyed SSH access if using health checking</li>
+</ul>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="Settingupthesystemadminuser">Setting up the system admin user</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
 You can run the DRSM package from your user account or from a system
 admin account. The DRSM user is configurable. The default DRSM user
 account is sysadmin. To setup a sysadmin account: 
-
+<pre>
 $ sudo su - root
 # groupadd -g 3500 sysadmin
 # useradd -u 3500 -g 3500 sysadmin
@@ -128,37 +196,49 @@ $ sudo su - root
 # su - sysadmin
 $ ssh-keygen -t dsa
 $ ssh-keygen -t rsa
-
+</pre>
 To create sysadmin accounts on systems you want to generate health
 check reports: 
-
+<pre>
 $ for s in server1 server2 server3 server4; do
 &gt; echo $s
 &gt; ssh -tq $s &quot;sudo su root -c &#39;groupadd -g 3500 sysadmin&#39;&quot;
 &gt; ssh -tq $s &quot;sudo su root -c &#39;useradd -u 3500 -g 3500 sysadmin&#39;&quot;
 &gt; ssh -tq $s &quot;sudo su root -c &#39;passwd sysadmin&#39;&quot;
 &gt; done
-
+</pre>
 Copy sysadmin public key to all systems you want to generate health
 check reports: 
-
+<pre>
 $ sudo su - sysadmin
 $ for s in server1 server2 server3 server4; do
 &gt; echo $s
 &gt; ssh-copy-id -i ~/.ssh/id_rsa.pub $s
 &gt; done
+</pre>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
-Installing:
-----------
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="Installing">Installing</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
 To install DRSM, from GITHUB:
-
+<pre>
 $ mkdir ~/git
 $  cd ~/git
 $  git clone https://github.com/datareel/dr_system_monitor
 $  cd dr_system_monitor/
-
+</pre>
 Setup your DRSM configuration:
-
+<pre>
 $ cp etc/drsm.sh ~/.drsm.sh
 $ vi ~/.drsm.sh
 
@@ -170,10 +250,10 @@ export SYSADMIN_GROUPNAME=sysadmin
 ...
 export TEMPdir=&quot;/tmp/${SYSADMIN_USERNAME}/drsm&quot;
 ...
-
+</pre>
 NOTE: In the example below replace /var/www/html/sysadmin with your
 ${WWWdir} setting:
-
+<pre>
 $ cat ~/.drsm.sh | grep WWWdir
 $ su - root
 # mkdir -p /var/www/html/sysadmin
@@ -187,11 +267,11 @@ $ ./install.sh
 Accept EULA (Yes/no)&gt; Yes
 ...
 Install complete
-
+</pre>
 When the install completes DRSM will be installed to ${HOME}/dsrm
-
+<br /><br />
 To test your installation:
-
+<pre>
 $ source ~/.drsm.sh
 $ vi ${CONFIGdir}/systems.dat
 
@@ -205,21 +285,36 @@ vm1,Test VM1, Test VM1 affected,no,yes,no,yes,yes
 vm2,Test VM2, Test VM2 affected,no,yes,no,yes,yes
 vm3,Test VM3, Test VM3 affected,no,yes,no,yes,yes
 vm4,Test VM4, Test VM4 affected,no,yes,no,yes,yes
-
+</pre>
 To print a system list:
+<pre>
 $ ~/drsm/bin/print_systems.sh
-
+</pre>
 To run a report test:
+<pre>
 $ ~/drsm/bin/system_check.sh
 $ ~/drsm/bin/system_report.sh 
-
+</pre>
 To test the Web interface:
+<pre>
 $ firefox http://$(hostname)/sysadmin
+</pre>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
-Setting up a DRSM development workstation:
------------------------------------------
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="SettingupaDRSMdevelopmentworkstation">Setting up a DRSM development workstation</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
 To setup a DRSM development workstation to run from your user account:
-
+<pre>
 $ mkdir -p ~/git
 $ cd ~/git
 $ git clone https://github.com/datareel/dr_system_monitor
@@ -227,24 +322,36 @@ $ cd ~/git/dr_system_monitor/etc
 $ cp -p drsm_dev.sh ~/.drsm.sh
 $ cd ~/git/dr_system_monitor/utils
 $ ./install.sh
-
+</pre>
 Your default install directory will be:
-
+<br /><br />
 $HOME/drsm
-
+<br /><br />
 Your default Web directory will be:
-
+<br /><br />
 $HOME/public_html/sysadmin
-
+<br /><br />
 To view your $HOME/public_html directory:
-
+<pre>
 $ firefox http://$(hostname)/~$(whoami)/sysadmin
+</pre>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
-Adding systems to monitor:
--------------------------
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="Addingsystemstomonitor">Adding systems to monitor</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
 The connectivity and heath reporting scripts use a CSV database file
 to select systems to monitor. The CSV format is: 
-
+<pre>
 hostname,description,impact,is_web_server,is_linux,is_cluser_ip,can_ping,can_ssh
 
 hostname = The hostname or IP address of the server or workstation
@@ -257,10 +364,10 @@ is_linux = Is this a Linux host, yes or no
 is_cluser_ip = Is this hostname or IP the head of a cluster node, yes or no
 can_ping = Can we ping this host, yes or no
 can_ssh = Can we SSH with keyed authentication to this host, yes or no
-
+</pre>
 To add production systems append new CSV lines to the
 ${CONFIGdir}/systems.dat file:
-
+<pre>
 $ source ~/.drsm.sh
 $ vi ${CONFIGdir}/systems.dat
 
@@ -268,13 +375,13 @@ $ vi ${CONFIGdir}/systems.dat
 cms,CMS server,Web CMS is affected,yes,yes,yes,yes,yes
 cms1,Primary CMS server,Web CMS is affected,no,yes,no,yes,yes
 cms2,Backup CMS server,Web CMS is affected,no,yes,no,yes,yes
-
+</pre>
 In the above example we checking the head of cluster and 2 cluster
 nodes.
-
+<br /><br />
 To add development systems append new CSV lines to the
 ${CONFIGdir}/dev_systems.dat file:
-
+<pre>
 $ source ~/.drsm.sh
 $ vi ${CONFIGdir}/dev_systems.dat
 
@@ -282,61 +389,91 @@ $ vi ${CONFIGdir}/dev_systems.dat
 wwwdev,Development Web server,WWWDEV Website is affected,yes,yes,yes,yes,yes
 wwwdev1,Development Web server 1,WWWDEV Website is affected,no,yes,no,yes,yes
 wwwdev2,Development Web server 2,WWWDEV Website is affected,no,yes,no,yes,yes
-
+</pre>
 To test your production and development configurations:
-
+<pre>
 $ ~/drsm/bin/system_check.sh
 $ ~/drsm/bin/system_check.sh NO DEV
+</pre>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
-Web Server Setup:
--------------------
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="WebServerSetup">Web Server Setup</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
 On your workstation or server running the DRSM package you will need
 to have Apache and PHP installed:
-
+<pre>
 $ sudo su - root
 # yum groupinstall &#39;Web Server&#39;
 # yum groupinstall &#39;PHP Support&#39;
-
+</pre>
 For testing:
+<pre>
 # yum install wget
 # yum install firefox
-
+</pre>
 Apache and PHP Configuration files:
+<pre>
 /etc/httpd/conf/httpd.conf
 /etc/httpf/conf.d/*.conf
 /etc/httpd/conf.modules.d/*.conf
 /etc/php.ini
-
+</pre>
 Apache Log files:
+<pre>
 /var/log/httpd
-
+</pre>
 Host-based firewall settings:
+<pre>
 # firewall-cmd --list-services
 # firewall-cmd --list-rich-rules
-
+</pre>
 If no HTTP services are listed above:
+<pre>
 # firewall-cmd --permanent --add-rich-rule=&#39;rule family=&quot;ipv4&quot; source address=&quot;192.168.122.0/24&quot; service name=&quot;http&quot; accept&#39;
 # firewall-cmd --permanent --add-rich-rule=&#39;rule family=&quot;ipv4&quot; source address=&quot;192.168.122.0/24&quot; service name=&quot;https&quot; accept&#39;
 # firewall-cmd --reload
 # firewall-cmd --list-rich-rules
-
-Where  192.168.122.0/24 is the subnet you will allow to view your
+</pre>
+Where 192.168.122.0/24 is the subnet you will allow to view your
 system admin reports.
-
+<br /><br />
 Start and enable the HTTPD service:
+<pre>
 # systemctl start httpd
 # systemctl enable httpd
+</pre>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
-Customizing the Web Interface:
------------------------------
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="CustomizingtheWebInterface">Customizing the Web Interface</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
 To customize your index page, page headers and footers, from your
 sysadmin user account:
-
+<pre>
 $ source ~/.drsm.sh
 $ cd $WWWdir/site
-
+</pre>
 Add or create the page_header.php and page_footer.php files:
-
+<pre>
 $ vi page_header.php
 
 &lt;!DOCTYPE html&gt;
@@ -353,74 +490,85 @@ $ vi page_footer.php
 &lt;hr /&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-
+</pre>
 To customize your sysadmin index page:
-
+<pre>
 $ source ~/.drsm.sh
 $ cd $WWWdir
-
+</pre>
 In the $WWWdir add or edit the index.php file:
-
+<pre>
 $ vi index.php
-
+</pre>
 The $WWWdir/index.php and $WWWdir/site files will not get overwritten
 if you update or re-install the DRSM package.
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
-Setting custom alert thresholds:
-------------------------------
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="Settingcustomalertthresholds">Setting custom alert thresholds</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
 When generating health check reports you may need to increase or
 decrease the default alert levels. When you run the system_report.sh
 script a configuration profile will be automatically generate for each
 host in your ${CONFIGdir}/systems.dat and ${CONFIGdir}/dev_systems.dat
 files. To change the default alert settings per system:
-
+<pre>
 $ source ~/.drsm.sh
 $ cd $CONFIGdir
 $ ls *profile.sh
-
+</pre>
 Edit the system profile you need to modify, for example:
-
+<pre>
 $ vi vm1_profile.sh
-
+</pre>
 By default the disk checks, montiors disk usage for all mounted
 partitions, warns at 90 percent usage, and errors at 99 percent usage.
 If you want to skip the check on some of your mounted partitions you
 need to supply a space separated list. To customize disk checking
 alerts, edit the disk check section inside the double quotes:
-
+<pre>
 &quot;${DRSMHOME}/health_check_scripts/disk_checks.sh &#39;/tmp /usr1&#39; 80 90&quot; 
-
+</pre>
 In the example above, we will skip checks on /tmp and /usr1. We will
 send a warning if we are at 80% disk usage on mounted partitions and
 send an error if we are at 90% disk usage. If you want to set the
 warning or error thresholds without skipping any mounted partitions:
-
+<pre>
 &quot;${DRSMHOME}/health_check_scripts/disk_checks.sh NONE 80 90&quot;
-
+</pre>
 By default the CPU check montiors the CPU usage for all sockets,
 physical cores, and logical cores. The default waning level is 85
 percent total usage and the default error level is 95 percent total
 usage. By default the CPU check will list the top 100 processes in the
 system report. To customize CPU checking alerts, edit the CPU check
 section inside the double quotes:
-
+<pre>
 &quot;${DRSMHOME}/health_check_scripts/cpu_checks.sh 75 85 200&quot;
-
+</pre>
 In the example above, we will send a warning if we are at 75% percent
 CPU usage, send an error if we are a 85% CPU usage, and list the top
 200 processes in our health check report.
-
+<br /><br />
 The load check monitors the 15 minute load average. The default waning
 level is 35 and the default error level is 50. To customize load
 average checking alerts, edit the load check section inside the double
 quotes:
-
+<pre>
 &quot;${DRSMHOME}/health_check_scripts/load_checks.sh 100 250&quot;
-
+</pre>
 In the example above, we will send a warning if our 15 minute load
 average reaches 100 and send an error if our 15 minute load average
 reaches 250. 
-
+<br /><br />
 The memory check monitors available free memory, the amount
 of SWAP spaced used, and lists the top 100 processes by default. The
 default error level for free memory is 256 MB or less. The default
@@ -428,14 +576,14 @@ warning for SWAP usage is 1024 MB or higher. The top number of
 processes listed in the report defaults to 100. To customize memory
 checking alerts, edit the memory check section inside the double
 quotes:
-
+<pre>
 &quot;${DRSMHOME}/health_check_scripts/memory_checks.sh 128 4096 300&quot;
-
+</pre>
 In the example above, we will send an error if our available free
 memory is at or below 128 MB. We will send a warning if we are using
 4096 MB or more of SWAP space, and list the top 300 processes in our
 health check report.
-
+<br /><br />
 By default the network checks monitor all active NICs. Reports uptime,
 the total number of bytes received and the number bytes transmitted.
 Errors and warning are based excessive packet loss, excessive number
@@ -443,24 +591,36 @@ of dropped packets, and/or excessive number of collisions. If you only
 want to monitor specific Ethernet interfaces you need to supply a space
 separated list. To customize network checking alerts, edit the network
 check section inside the double quotes:
-
+<pre>
 &quot;${DRSMHOME}/health_check_scripts/network_checks.sh &#39;eth1 eth2&#39;&quot; 
-
+</pre>
 In the example above, we will only monitor the eth1 and eth2
 interfaces, all other active interfaces will be skipped.
-
+<br /><br />
 The user check, generates a list of all users logged into the server
 or workstation you are monitoring. If you want to generate an error
 alert if a certain user or list of users are logged in:
-
+<pre>
 &quot;${DRSMHOME}/health_check_scripts/user_checks.sh &#39;usr1 usr2 usr3&#39;&quot;
-
+</pre>
 If you want to generate a warning alert if a certain user or list of users are logged in:
-
+<pre>
 &quot;${DRSMHOME}/health_check_scripts/user_checks.sh NONE &#39;usr4 usr5 usr6&#39;&quot;
+</pre>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
-Email Text messaging setup:
--------------------------
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="EmailTextmessagingsetup">Email Text messaging setup</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
 By default the DRSM alerts are emailed to the &quot;root&quot; account on the
 server or workstation running the DRSM package. Email and text
 messages are only sent in 4 hour increments. For example, if you run
@@ -468,26 +628,26 @@ DRSM crons every 30 minutes and there is a system reporting an error,
 you get one email and/or text error alert once in a 4 hour period and
 not every 30 minutes. This prevents DRSM from generating excessive
 email and/or text messages.
-
+<br /><br />
 To setup and test the alert messaging, run the following:
-
+<pre>
 $ source ~/.drsm.sh
 $ cd $DRSMHOME/bin
 $ ./test_alert.sh
-
+</pre>
 To add or remove email addresses or SMS addresses, edit the email list
 file:
-
+<pre>
 $ source ~/.drsm.sh
 $ cd $DRSMHOME/etc
 $ vi alert.email.list
 
 export EMAILlist=&quot;root,example@example.com&quot;
 export TEXTlist=&quot;5555555555@vtext.com,5555555555@txt.att.net&quot;
-
+</pre>
 For SMS, text messaging, use the “mobile number”@”domain” for mobile
 provider. The most common domains are:
-  
+<pre>  
 Verizon Wireless: mobile_number@vtext.com
 AT&amp;T: mobile_number@txt.att.net
 Cingular: mobile_number@mycingular.com
@@ -495,26 +655,26 @@ Nextel: mobile_number@messaging.nextel.com
 T-Mobile: mobile_number@tmomail.net
 Sprint: mobile_number@messaging.sprintpcs.com
 Trac: mobile_number@mmst5.tracfone.com
-
+</pre>
 If your postfix configuration is not configured for a relay host or
 smart host you may not be able to email or text from the workstation
 or server running the DRSM package. To monitor postfix:
-
+<pre>
 $ su - root
 # tail -f /var/log/maillog
-
+</per>
 If your data center has a relay host, you can use the relay host by
 modifying the postfix configuration:
-
+</pre>
 # vi /etc/postfix/main.cf
 
 relayhost = 192.168.1.12
 
 # systemctl restart postfix
-
+</pre>
 If you do not have a relay host, you can setup a smart host using an
 external email account:
-
+<pre>
 # cd /etc/postfix
 # vi main.cf
 
@@ -541,19 +701,31 @@ root@localdomain.local  username@example.com
 @localdomain.local      username@example.com
 
 # postmap /etc/postfix/generic
-
+</pre>
 After changing the postfix configuration and building the hashes,
 restart postfix to load the configuration changes and new hash tables:
-
+<pre>
 # systemctl restart postfix
- 
-Monitoring Crons:
-----------------
+</pre>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="MonitoringCrons">Monitoring Crons</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
 To run the DRSM package for production and development system
 monitoring setup user crons to run the system check and report
 scripts. In the example crontab entries below we are using
 /home/sysadmin/drsm as our installation directory:
-
+<pre>
 # Check for production system errors every 30 minutes
 30 * * * * /home/sysadmin/drsm/bin/system_check.sh &amp;&gt; /dev/null
 45 * * * * /home/sysadmin/drsm/bin/system_report.sh &amp;&gt; /dev/null
@@ -569,10 +741,10 @@ scripts. In the example crontab entries below we are using
 # System reports archive and purge
 59 23 * * * /home/sysadmin/drsm/bin/archive.sh
 00 * * * * /home/sysadmin/drsm/bin/purge.sh
-
+</pre>
 If you are running the DRSM package on a server cluster, the following
 is an HA crontab example using the sysadmin user account:
-
+<pre>
 # Check for production system errors every 30 minutes
 30 * * * * sysadmin bash -c &#39;/home/sysadmin/drsm/bin/system_check.sh &&gt; /dev/null&#39;
 45 * * * * sysadmin bash -c &#39;/home/sysadmin/drsm/bin/system_report.sh &&gt; /dev/null&#39;
@@ -588,14 +760,26 @@ is an HA crontab example using the sysadmin user account:
 # System reports archive and purge
 59 23 * * * sysadmin bash -c &#39;/home/sysadmin/drsm/bin/archive.sh &amp;&gt; /dev/null&#39;
 00 * * * *  sysadmin bash -c &#39;/home/sysadmin/drsm/bin/purge.sh &amp;&gt; /dev/null&#39;
+</pre>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
-MySQL Utilities:
----------------
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="MySQLUtilities">MySQL Utilities</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
 The DRSM MySQL utilities include backup, stat collection, and
 optimization scripts. Each utility will give you the option to store
 MySQL credentials, allowing you to automate database backups and
 optimization. To test connectivity and store MySQL credentials:
-
+<pre>
 $ source ~/.drsm.sh
 $ cd $DRSMHOME/mysql
 $ ./mysql_dbflush.sh 
@@ -612,50 +796,62 @@ Flushing HOSTS
 Flushing LOGS
 Flushing STATUS
 Flushing USER_RESOURCES
-
+</pre>
 Run the same command again, this time supplying the MySQL server&#39;s
 hostname:
-
+<pre>
 $ ./mysql_dbflush.sh cms.example.com
-
+</pre>
 If you selected yes to save the MySQL credentials, you will not be
 prompted for a user name and password.
-
+<br /><br />
 To run a MySQL backup, first check your backup settings:
-
+<pre>
 $ vi ~/.drsm.sh
 
 ...
 export BACKUP_age=30
 ...
 export BACKUPdir=${HOME}/backups
-
+</pre>
 This config will save 30 days of backups in the $HOME/backups
 directory. Next, run the back up script supplying the hostname of the
 MySQL server you wish to backup:
-
+<pre>
 source ~/.drsm.sh
 cd $DRSMHOME/mysql
 ./mysql_backup.sh cms.example.com
-
+</pre>
 To collect MySQL statistics:
-
+<pre>
 ./collect_mysql_stats.sh cms.example.com
-
+</pre>
 To optimize MySQL performance:
-
+<pre>
 ./mysql_defragment.sh cms.example.com
 ./mysql_dbflush.sh cms.example.com
+</pre>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
-Postgres Utilities:
-------------------
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="PostgresUtilities">Postgres Utilities</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
 The DRSM Postgres utilities include backup and optimization
 scripts. Each utility will give you the option to store Postgres
 credentials, allowing you to automate database backups and
 optimization.
-
+<br /><br />
 To test connectivity and store Postgres credentials:
-
+<pre>
 $ source ~/.drsm.sh
 $ cd $DRSMHOME/postgres
 $ ./postgres_db_checks.sh
@@ -664,35 +860,35 @@ PG host: gis.example.com
 PG username: postgres
 PG pass: ***********
 Do you want to save PG auth for gis.example.com (yes/no)&gt; yes
-
+</pre>
 Run the same command again, this time supplying the Postgres server&#39;s hostname:
-
+<pre>
 $ ./postgres_db_checks.sh gis.example.com
-
+</pre>
 If you selected yes to save the Postgres credentials, you will not be
 prompted for a user name and password.
-
+<br /><br />
 To run a Postgres backup, first check your backup settings:
-
+<pre>
 $ vi ~/.drsm.sh
 
 ...
 export BACKUP_age=30
 ...
 export BACKUPdir=${HOME}/backups
-
+</pre>
 This will save 30 days of backups in the $HOME/backups
 directory. Next, run the backup script supplying the hostname of the
 database server you wish to backup:
-
+<pre>
 $ source ~/.drsm.sh
 $ cd $DRSMHOME/postgres
 $ ./postgres_backup.sh gis.example.com
-
+</pre>
 To optimize Postgres database performance:
-
+<pre>
 $ ./postgres_optimize.sh gis.example.com
-
+</pre>
 If you need to backup and optimize different versions of Postgres, you
 will need to configure your runtime environment to use the same
 version of Postgres installed on each DB server. For example if your
@@ -701,7 +897,7 @@ version 9.2, you will need to use version 9.2 utilities on your
 workstation. To do this globally on your system monitor, install a
 copy of 9.2 in /usr/local and set the following environmental
 variables: 
-
+<pre>
 $ vi ~/.drsm.sh
 
 # Postgres utils settings
@@ -710,24 +906,57 @@ export PSQL=&quot;/usr/local/pgsql-9.2/bin/psql&quot;
 export PG_DUMP=&quot;/usr/local/pgsql-9.2/bin/pg_dump&quot;
 export PG_RESTORE=&quot;/usr/local/pgsql-9.2/bin/pg_restore&quot;
 export VACUUMDB=&quot;/usr/local/pgsql-9.2/bin/vacuumdb&quot;
-
+</pre>
 To set postgres variables for individual database servers:
-
+<pre>
 $ source ~/.drsm.sh
 $ vi $DRSMHOME/.auth/gis.example.com.pg
-
+</pre>
 Set your PG variables in the .pg file corresponding to each database
 server&#39;s hostname.
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
 
-Support:
--------
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="RemainingWork">Remaining Work on This Project</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<p>
+<ul>
+<li>Rewrite of Postgres stat collection</li>
+</ul>
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
+<!-- Begin Title Bar -->
+<table border="0" cellpadding="0" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="A0CCFF"><font face="Arial,Helvetica,Sans-serif"><b>&nbsp;<a name="Support">Support and Bug Tracking</a></b></font></td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Title Bar -->
+<br />
+<p>
 For any DRSM support issues, questions, or suggestions open a ticket
 on GITHUB:
-
-https://github.com/datareel/dr_system_monitor/issues
-
+<br /><br />
+<a href="https://github.com/datareel/dr_system_monitor/issues">https://github.com/datareel/dr_system_monitor/issues</a>
+<br /><br />
 If you wish to contribute to the DRSM project, fork a copy of the DRSM
 repo or post code updates to open issue thread.
+</p>
+<p class="pull-left"><a href="#">Back to top</a></p>
+
+<br />
+<hr color="#000000" noshade="noshade" size="1" /><!-- Start Copyright Information -->
+<p><font color="000000">Copyright &copy; 2001-2017&nbsp;DataReel OpenSource</font></p>
 
 <!-- My Content Ends Above -->
       </div>
